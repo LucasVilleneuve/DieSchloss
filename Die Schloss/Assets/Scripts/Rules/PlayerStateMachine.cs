@@ -4,24 +4,22 @@ using UnityEngine;
 
 public class PlayerStateMachine : MonoBehaviour
 {
-    public enum TurnState
+    public enum PlayerState
     {
-        START,
         WAIT,
         SELECTING,
-        ACTION,
+        PERFORMACTION,
         END
     }
 
     // PlayerScript player;
-    public TurnState currentState = TurnState.START;
+    public PlayerState currentState = PlayerState.WAIT;
 
     private GameStateMachine gsm;
 
     private void Start()
     {
         Debug.Log("Player start");
-        //currentState = TurnState.IDLE;
         gsm = GameObject.FindGameObjectWithTag("GameStateMachine").GetComponent<GameStateMachine>();
     }
 
@@ -29,21 +27,18 @@ public class PlayerStateMachine : MonoBehaviour
     {
         switch (currentState)
         {
-            case (TurnState.START):
+            case (PlayerState.WAIT):
                 break;
 
-            case (TurnState.WAIT):
-                break;
-
-            case (TurnState.SELECTING):
+            case (PlayerState.SELECTING):
                 SelectAction();
                 break;
 
-            case (TurnState.ACTION):
+            case (PlayerState.PERFORMACTION):
                 PerformAction();
                 break;
 
-            case (TurnState.END):
+            case (PlayerState.END):
                 break;
         }
     }
@@ -51,14 +46,20 @@ public class PlayerStateMachine : MonoBehaviour
     private void SelectAction()
     {
         HandleTurn action = new HandleTurn();
+        HandleTurn endTurn = new HandleTurn();
 
         // Perform action
         action.type = "Player";
+        endTurn.type = "PlayerEndTurn";
         Debug.Log("Selecting Action");
 
         gsm.CollectAction(action);
+        gsm.CollectAction(action);
+        gsm.CollectAction(endTurn);
 
-        currentState = TurnState.ACTION;
+        currentState = PlayerState.WAIT;
+
+        //currentState = PlayerState.PERFORMACTION;
     }
 
     private void PerformAction()
@@ -66,6 +67,8 @@ public class PlayerStateMachine : MonoBehaviour
         // Do action
         Debug.Log("Performing action");
 
-        gsm.EndPlayerTurn();
+        // If final action
+        //gsm.EndPlayerTurn();
+        currentState = PlayerState.WAIT;
     }
 }

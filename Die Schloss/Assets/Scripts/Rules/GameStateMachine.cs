@@ -6,10 +6,9 @@ public class GameStateMachine : MonoBehaviour
 {
     public enum Action
     {
-        WAIT,
-        TAKEACTION,
-        PERFORMACTION,
         START,
+        WAIT,
+        PROCESSACTION,
         GAMETURN,
         PLAYERTURN,
         ENEMYTURN,
@@ -17,7 +16,7 @@ public class GameStateMachine : MonoBehaviour
     }
 
     public Action currentAction;
-    public List<HandleTurn> actions = new List<HandleTurn>();
+    public Queue<HandleTurn> actions = new Queue<HandleTurn>();
     private PlayerStateMachine player;
 
     private void Start()
@@ -25,33 +24,25 @@ public class GameStateMachine : MonoBehaviour
         Debug.Log("GSM start");
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStateMachine>();
         currentAction = Action.START;
-        //player.currentState = PlayerStateMachine.TurnState.SELECTING;
     }
 
     private void Update()
     {
         switch (currentAction)
         {
-            case (Action.WAIT):
-                //if (actions.Count > 0)
-                //{
-                //    currentAction = Action.TAKEACTION;
-                //}
-                //else
-                //{
-                //    Debug.Log("End of turn");
-                //}
-                break;
-
-            case (Action.TAKEACTION):
-                //ProcessActions();
-                break;
-
-            case (Action.PERFORMACTION):
-                break;
-
             case (Action.START):
                 currentAction = Action.GAMETURN;
+                break;
+
+            case (Action.WAIT):
+                if (actions.Count > 0)
+                {
+                    currentAction = Action.PROCESSACTION;
+                }
+                break;
+
+            case (Action.PROCESSACTION):
+                ProcessActions();
                 break;
 
             case (Action.GAMETURN):
@@ -76,38 +67,39 @@ public class GameStateMachine : MonoBehaviour
 
     public void CollectAction(HandleTurn action)
     {
-        actions.Add(action);
+        actions.Enqueue(action);
     }
 
     private void ProcessActions()
     {
-        HandleTurn turn = actions[0];
-        actions.RemoveAt(0);
+        Debug.Log("Processing action");
+        HandleTurn turn = actions.Dequeue();
 
         if (turn.type == "Player")
         {
-            player.currentState = PlayerStateMachine.TurnState.ACTION;
+            player.currentState = PlayerStateMachine.PlayerState.PERFORMACTION;
+        }
+        else if (turn.type == "PlayerEndTurn")
+        {
+            player.currentState = PlayerStateMachine.PlayerState.WAIT;
+            EndPlayerTurn();
+            return;
         }
 
-        currentAction = Action.PERFORMACTION;
+        currentAction = Action.WAIT;
     }
 
     private void PlayerTurn()
     {
         Debug.Log("It's player's turn");
-        player.currentState = PlayerStateMachine.TurnState.SELECTING;
+        player.currentState = PlayerStateMachine.PlayerState.SELECTING;
         currentAction = Action.WAIT;
     }
-
-    //public void MakeStateMachineWait()
-    //{
-    //    currentAction = Action.WAIT;
-    //}
 
     public void EndPlayerTurn()
     {
         currentAction = Action.ENEMYTURN;
-        player.currentState = PlayerStateMachine.TurnState.WAIT;
+        player.currentState = PlayerStateMachine.PlayerState.WAIT;
         Debug.Log("End of player turn");
     }
 }
