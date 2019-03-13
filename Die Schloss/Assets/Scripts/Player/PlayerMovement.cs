@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(PlayerStateMachine))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Tilemap ground;
@@ -11,41 +12,98 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private GameObject dirArrow;
 
-    private bool isMoving = false;
-
-    private void Start()
+    private enum Direction
     {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
+    }
+
+    /* Components */
+    private PlayerStateMachine psm;
+
+    /* Inputs */
+    private float hInput = 0f;
+    private float vInput = 0f;
+
+    /* Attributes */
+    private bool canMove = false;
+    private bool isMoving = false;
+    private Direction currentDir = Direction.UP;
+    private Vector2 currentDirVec = new Vector2();
+
+    private void Awake()
+    {
+        psm = GetComponent<PlayerStateMachine>();
     }
 
     private void Update()
     {
+        hInput = Input.GetAxisRaw("Horizontal");
+        vInput = Input.GetAxisRaw("Vertical");
     }
 
     private void FixedUpdate()
     {
-        if (isMoving) return;
-
-        float hInput = Input.GetAxis("Horizontal");
-        float vInput = Input.GetAxis("Vertical");
-
-        hInput = Mathf.Round(hInput);
-        vInput = Mathf.Round(vInput);
+        if (isMoving || !canMove) return;
 
         if (hInput != 0 || vInput != 0)
         {
-            Move(new Vector2(hInput, vInput));
+            Vector2 newDir = new Vector2(hInput, vInput);
+            GetNewDirection(newDir);
+            canMove = false;
+            //Move(newDir);
         }
+    }
+
+    public void MakePlayerMove()
+    {
+        Move(currentDirVec);
     }
 
     private void Move(Vector2 dir)
     {
         Vector2 pos = transform.position;
         Vector2 targetPos = pos + dir;
-        if (dir == Vector2.up) dirArrow.transform.eulerAngles = new Vector3(0, 0, 90);
-        else if (dir == Vector2.down) dirArrow.transform.eulerAngles = new Vector3(0, 0, -90);
-        else if (dir == Vector2.right) dirArrow.transform.eulerAngles = new Vector3(0, 0, 0);
-        else if (dir == Vector2.left) dirArrow.transform.eulerAngles = new Vector3(0, 0, 180);
         StartCoroutine(SmoothMovement(targetPos));
+    }
+
+    private void GetNewDirection(Vector2 dir)
+    {
+        Debug.Log("Getting new Direction " + dir);
+
+        if (dir == Vector2.up)
+        {
+            currentDir = Direction.UP;
+            dirArrow.transform.eulerAngles = new Vector3(0, 0, 90f);
+        }
+        else if (dir == Vector2.down)
+        {
+            currentDir = Direction.DOWN;
+            dirArrow.transform.eulerAngles = new Vector3(0, 0, -90f);
+        }
+        else if (dir == Vector2.right)
+        {
+            currentDir = Direction.RIGHT;
+            dirArrow.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else if (dir == Vector2.left)
+        {
+            currentDir = Direction.LEFT;
+            dirArrow.transform.eulerAngles = new Vector3(0, 0, 180f);
+        }
+
+        currentDirVec = dir;
+
+        StartCoroutine(DebugWaiter(0.5f));
+    }
+
+    public IEnumerator DebugWaiter(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        psm.FinishedSelecting();
     }
 
     private IEnumerator SmoothMovement(Vector3 end)
@@ -65,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         isMoving = false;
+        psm.EndTurn();
     }
 
     private TileBase GetTile(Tilemap tmap, Vector2 pos)
@@ -75,5 +134,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector3Int GetTilePos(Tilemap tmap, Vector2 pos)
     {
         return tmap.WorldToCell(pos);
+    }
+
+    public void EnablePlayerMovement(bool enable)
+    {
+        canMove = enable;
     }
 }

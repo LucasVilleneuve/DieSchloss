@@ -77,6 +77,7 @@ public class GameStateMachine : MonoBehaviour
 
         if (turn.type == "Player")
         {
+            player.currentAction = turn;
             player.currentState = PlayerStateMachine.PlayerState.PERFORMACTION;
         }
         else if (turn.type == "PlayerEndTurn")

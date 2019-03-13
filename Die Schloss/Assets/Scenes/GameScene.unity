@@ -222,7 +222,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 120156539}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab1c626e5a69f3042a5b30edd9154453, type: 3}
   m_Name: 
@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 295202998}
   - component: {fileID: 295202997}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Selection Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -313,7 +313,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295202995}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -4471,11 +4471,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015789017}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f21f19cd9cc640740a81665925f777ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionCanvas: {fileID: 295202999}
   currentState: 0
 --- !u!114 &2015789024
 MonoBehaviour:
@@ -4490,7 +4491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ground: {fileID: 500314384}
-  moveTime: 0.3
+  moveTime: 0.5
   dirArrow: {fileID: 1065579181}
 --- !u!1001 &2040590248
 PrefabInstance:

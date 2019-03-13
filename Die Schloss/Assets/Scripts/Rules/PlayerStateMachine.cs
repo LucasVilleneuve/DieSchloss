@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerMovement))]
 public class PlayerStateMachine : MonoBehaviour
 {
+    [SerializeField] private Canvas selectionCanvas;
+
     public enum PlayerState
     {
         WAIT,
@@ -12,15 +15,18 @@ public class PlayerStateMachine : MonoBehaviour
         END
     }
 
-    // PlayerScript player;
-    public PlayerState currentState = PlayerState.WAIT;
-
+    /* Components */
+    private PlayerMovement playerMov;
     private GameStateMachine gsm;
+
+    public PlayerState currentState = PlayerState.WAIT;
+    public HandleTurn currentAction = null;
 
     private void Start()
     {
         Debug.Log("Player start");
         gsm = GameObject.FindGameObjectWithTag("GameStateMachine").GetComponent<GameStateMachine>();
+        playerMov = GetComponent<PlayerMovement>();
     }
 
     private void Update()
@@ -45,21 +51,26 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void SelectAction()
     {
-        HandleTurn action = new HandleTurn();
-        HandleTurn endTurn = new HandleTurn();
+        Debug.Log("Start of selecting state");
 
-        // Perform action
-        action.type = "Player";
-        endTurn.type = "PlayerEndTurn";
-        Debug.Log("Selecting Action");
-
-        gsm.CollectAction(action);
-        gsm.CollectAction(action);
-        gsm.CollectAction(endTurn);
+        EnableSelecting(true);
 
         currentState = PlayerState.WAIT;
+    }
 
-        //currentState = PlayerState.PERFORMACTION;
+    public void FinishedSelecting()
+    {
+        Debug.Log("Player finished selecting");
+
+        EnableSelecting(false);
+
+        HandleTurn action = new HandleTurn
+        {
+            type = "Player",
+            action = "Move"
+        };
+
+        gsm.CollectAction(action);
     }
 
     private void PerformAction()
@@ -67,8 +78,34 @@ public class PlayerStateMachine : MonoBehaviour
         // Do action
         Debug.Log("Performing action");
 
-        // If final action
-        //gsm.EndPlayerTurn();
+        if (currentAction != null)
+        {
+            switch (currentAction.action)
+            {
+                case ("Move"):
+                    playerMov.MakePlayerMove();
+                    break;
+            }
+        }
+
         currentState = PlayerState.WAIT;
+    }
+
+    public void EnableSelecting(bool enable)
+    {
+        Debug.Log("Enabling canvas and movement : " + enable);
+
+        selectionCanvas.enabled = enable;
+        playerMov.EnablePlayerMovement(enable);
+    }
+
+    public void EndTurn()
+    {
+        HandleTurn endturn = new HandleTurn
+        {
+            type = "PlayerEndTurn"
+        };
+
+        gsm.CollectAction(endturn);
     }
 }
