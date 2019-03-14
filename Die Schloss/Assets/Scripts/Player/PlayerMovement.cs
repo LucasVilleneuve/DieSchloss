@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isMoving = false;
     private Direction currentDir = Direction.UP;
     private Vector2 currentDirVec = new Vector2();
+    private bool confirmButtonPressed = false;
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     {
         hInput = Input.GetAxisRaw("Horizontal");
         vInput = Input.GetAxisRaw("Vertical");
+        confirmButtonPressed = Input.GetButton("Confirm");
     }
 
     private void FixedUpdate()
@@ -52,21 +54,31 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector2 newDir = new Vector2(hInput, vInput);
             GetNewDirection(newDir);
-            canMove = false;
+            //canMove = false;
             //Move(newDir);
+        }
+
+        if (confirmButtonPressed)
+        {
+            FinishedSelecting();
         }
     }
 
     public void MakePlayerMove()
     {
-        Move(currentDirVec);
+        StartCoroutine(Move(currentDirVec));
     }
 
-    private void Move(Vector2 dir)
+    private IEnumerator Move(Vector2 dir)
     {
         Vector2 pos = transform.position;
         Vector2 targetPos = pos + dir;
-        StartCoroutine(SmoothMovement(targetPos));
+        Debug.Log("Before moving");
+        yield return StartCoroutine(SmoothMovement(targetPos));
+        Debug.Log("After moving");
+
+        psm.ClearCurrentAction();
+        psm.EndTurn();
     }
 
     private void GetNewDirection(Vector2 dir)
@@ -95,8 +107,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         currentDirVec = dir;
-
-        StartCoroutine(DebugWaiter(0.5f));
     }
 
     public IEnumerator DebugWaiter(float time)
@@ -121,9 +131,9 @@ public class PlayerMovement : MonoBehaviour
 
             yield return null;
         }
+        Debug.Log("Finished moving");
 
         isMoving = false;
-        psm.EndTurn();
     }
 
     private TileBase GetTile(Tilemap tmap, Vector2 pos)
@@ -139,5 +149,10 @@ public class PlayerMovement : MonoBehaviour
     public void EnablePlayerMovement(bool enable)
     {
         canMove = enable;
+    }
+
+    private void FinishedSelecting()
+    {
+        psm.FinishedSelecting();
     }
 }

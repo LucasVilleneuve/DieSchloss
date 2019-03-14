@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerStateMachine : MonoBehaviour
 {
-    [SerializeField] private Canvas selectionCanvas;
+    [SerializeField] private GameObject selectionCanvas;
 
     public enum PlayerState
     {
@@ -76,7 +76,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void PerformAction()
     {
         // Do action
-        Debug.Log("Performing action");
+        Debug.Log("Performing action : " + currentAction.type + " - " + currentAction.action);
 
         if (currentAction != null)
         {
@@ -95,7 +95,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         Debug.Log("Enabling canvas and movement : " + enable);
 
-        selectionCanvas.enabled = enable;
+        selectionCanvas.SetActive(enable);
         playerMov.EnablePlayerMovement(enable);
     }
 
@@ -107,5 +107,10 @@ public class PlayerStateMachine : MonoBehaviour
         };
 
         gsm.CollectAction(endturn);
+    }
+
+    public void ClearCurrentAction()
+    {
+        currentAction = null;
     }
 }
