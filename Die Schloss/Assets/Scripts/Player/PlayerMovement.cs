@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -8,9 +7,12 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Tilemap ground;
-    [SerializeField] private float moveTime = 0.3f;
-
+    [SerializeField] private Tilemap collideable;
     [SerializeField] private GameObject dirArrow;
+    [SerializeField] private Sprite arrowSprite;
+    [SerializeField] private Sprite crossSprite;
+
+    [SerializeField] private float moveTime = 0.3f;
 
     private enum Direction
     {
@@ -30,13 +32,18 @@ public class PlayerMovement : MonoBehaviour
     /* Attributes */
     private bool canMove = false;
     private bool isMoving = false;
+    private bool dirSelected = false;
+    private bool isCurrentDirValid = false;
     private Direction currentDir = Direction.UP;
     private Vector2 currentDirVec = new Vector2();
     private bool confirmButtonPressed = false;
 
+    private Image dirArrowImg;
+
     private void Awake()
     {
         psm = GetComponent<PlayerStateMachine>();
+        dirArrowImg = dirArrow.GetComponentInChildren<Image>();
     }
 
     private void Update()
@@ -52,13 +59,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (hInput != 0 || vInput != 0)
         {
-            Vector2 newDir = new Vector2(hInput, vInput);
-            GetNewDirection(newDir);
-            //canMove = false;
-            //Move(newDir);
+            GetNewDirection(new Vector2(hInput, vInput));
         }
 
-        if (confirmButtonPressed)
+        if (isCurrentDirValid && confirmButtonPressed)
         {
             FinishedSelecting();
         }
@@ -73,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 pos = transform.position;
         Vector2 targetPos = pos + dir;
+
         Debug.Log("Before moving");
         yield return StartCoroutine(SmoothMovement(targetPos));
         Debug.Log("After moving");
@@ -83,37 +88,32 @@ public class PlayerMovement : MonoBehaviour
 
     private void GetNewDirection(Vector2 dir)
     {
-        Debug.Log("Getting new Direction " + dir);
+        float rotationAngle = 0f;
 
         if (dir == Vector2.up)
         {
             currentDir = Direction.UP;
-            dirArrow.transform.eulerAngles = new Vector3(0, 0, 90f);
+            rotationAngle = 90f;
         }
         else if (dir == Vector2.down)
         {
             currentDir = Direction.DOWN;
-            dirArrow.transform.eulerAngles = new Vector3(0, 0, -90f);
+            rotationAngle = -90f;
         }
         else if (dir == Vector2.right)
         {
             currentDir = Direction.RIGHT;
-            dirArrow.transform.eulerAngles = new Vector3(0, 0, 0);
+            rotationAngle = 0f;
         }
         else if (dir == Vector2.left)
         {
             currentDir = Direction.LEFT;
-            dirArrow.transform.eulerAngles = new Vector3(0, 0, 180f);
+            rotationAngle = 180f;
         }
 
+        dirArrow.transform.eulerAngles = new Vector3(0, 0, rotationAngle);
         currentDirVec = dir;
-    }
-
-    public IEnumerator DebugWaiter(float time)
-    {
-        yield return new WaitForSeconds(time);
-
-        psm.FinishedSelecting();
+        CheckIfCurrentDirIsValid();
     }
 
     private IEnumerator SmoothMovement(Vector3 end)
@@ -131,9 +131,10 @@ public class PlayerMovement : MonoBehaviour
 
             yield return null;
         }
-        Debug.Log("Finished moving");
 
         isMoving = false;
+
+        Debug.Log("Finished moving");
     }
 
     private TileBase GetTile(Tilemap tmap, Vector2 pos)
@@ -149,10 +150,36 @@ public class PlayerMovement : MonoBehaviour
     public void EnablePlayerMovement(bool enable)
     {
         canMove = enable;
+        CheckIfCurrentDirIsValid();
     }
 
     private void FinishedSelecting()
     {
         psm.FinishedSelecting();
+    }
+
+    private bool CanMoveToTile(Vector2 pos)
+    {
+        TileBase groundTile = GetTile(ground, pos);
+        TileBase collideableTile = GetTile(collideable, pos);
+
+        if (groundTile == false) return false;
+        if (collideableTile != null) return false;
+        return true;
+    }
+
+    private void ChangeSpriteDirection(bool canMoveToDir)
+    {
+        dirArrowImg.sprite = (canMoveToDir) ? arrowSprite : crossSprite;
+    }
+
+    private void CheckIfCurrentDirIsValid()
+    {
+        Vector2 pos = transform.position;
+        Vector2 targetPos = pos + currentDirVec;
+
+        isCurrentDirValid = CanMoveToTile(targetPos);
+        Debug.Log("Current Dir correct ? " + isCurrentDirValid);
+        ChangeSpriteDirection(isCurrentDirValid);
     }
 }

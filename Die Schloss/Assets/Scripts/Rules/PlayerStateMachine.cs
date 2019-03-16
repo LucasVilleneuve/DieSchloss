@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerStateMachine : MonoBehaviour
@@ -95,8 +93,8 @@ public class PlayerStateMachine : MonoBehaviour
     {
         Debug.Log("Enabling canvas and movement : " + enable);
 
-        selectionCanvas.SetActive(enable);
         playerMov.EnablePlayerMovement(enable);
+        selectionCanvas.SetActive(enable);
     }
 
     public void EndTurn()
