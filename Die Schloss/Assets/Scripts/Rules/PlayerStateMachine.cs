@@ -19,6 +19,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public PlayerState currentState = PlayerState.WAIT;
     public HandleTurn currentAction = null;
+    public bool isCurrentlySelecting = false;
 
     private void Start()
     {
@@ -49,7 +50,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void SelectAction()
     {
-        Debug.Log("Start of selecting state");
+        //Debug.Log("Start of selecting state");
 
         EnableSelecting(true);
 
@@ -58,7 +59,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void FinishedSelecting()
     {
-        Debug.Log("Player finished selecting");
+        //Debug.Log("Player finished selecting");
 
         EnableSelecting(false);
 
@@ -74,7 +75,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void PerformAction()
     {
         // Do action
-        Debug.Log("Performing action : " + currentAction.type + " - " + currentAction.action);
+        //Debug.Log("Performing action : " + currentAction.type + " - " + currentAction.action);
 
         if (currentAction != null)
         {
@@ -91,8 +92,9 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void EnableSelecting(bool enable)
     {
-        Debug.Log("Enabling canvas and movement : " + enable);
+        //Debug.Log("Enabling canvas and movement : " + enable);
 
+        isCurrentlySelecting = enable;
         playerMov.EnablePlayerMovement(enable);
         selectionCanvas.SetActive(enable);
     }
@@ -110,5 +112,10 @@ public class PlayerStateMachine : MonoBehaviour
     public void ClearCurrentAction()
     {
         currentAction = null;
+    }
+
+    public bool IsPlayerInSelectingState()
+    {
+        return isCurrentlySelecting;
     }
 }

@@ -78,9 +78,9 @@ public class PlayerMovement : MonoBehaviour
         Vector2 pos = transform.position;
         Vector2 targetPos = pos + dir;
 
-        Debug.Log("Before moving");
+        //Debug.Log("Before moving");
         yield return StartCoroutine(SmoothMovement(targetPos));
-        Debug.Log("After moving");
+        //Debug.Log("After moving");
 
         psm.ClearCurrentAction();
         psm.EndTurn();
@@ -134,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
 
         isMoving = false;
 
-        Debug.Log("Finished moving");
+        //Debug.Log("Finished moving");
     }
 
     private TileBase GetTile(Tilemap tmap, Vector2 pos)
@@ -179,7 +179,6 @@ public class PlayerMovement : MonoBehaviour
         Vector2 targetPos = pos + currentDirVec;
 
         isCurrentDirValid = CanMoveToTile(targetPos);
-        Debug.Log("Current Dir correct ? " + isCurrentDirValid);
         ChangeSpriteDirection(isCurrentDirValid);
     }
 }
