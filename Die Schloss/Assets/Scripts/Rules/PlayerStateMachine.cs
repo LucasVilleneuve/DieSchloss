@@ -3,7 +3,8 @@
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerStateMachine : MonoBehaviour
 {
-    [SerializeField] private GameObject selectionCanvas;
+    [SerializeField] private GameObject[] selectionCanvas;
+    [SerializeField] private TimeLeftTurn timeLeftTurn;
 
     public enum PlayerState
     {
@@ -17,6 +18,7 @@ public class PlayerStateMachine : MonoBehaviour
     private PlayerMovement playerMov;
     private GameStateMachine gsm;
 
+    /* Public attributes */
     public PlayerState currentState = PlayerState.WAIT;
     public HandleTurn currentAction = null;
     public bool isCurrentlySelecting = false;
@@ -53,7 +55,8 @@ public class PlayerStateMachine : MonoBehaviour
         //Debug.Log("Start of selecting state");
 
         EnableSelecting(true);
-
+        timeLeftTurn.Reset();
+        timeLeftTurn.StartTimer();
         currentState = PlayerState.WAIT;
     }
 
@@ -96,7 +99,15 @@ public class PlayerStateMachine : MonoBehaviour
 
         isCurrentlySelecting = enable;
         playerMov.EnablePlayerMovement(enable);
-        selectionCanvas.SetActive(enable);
+        foreach (GameObject canvas in selectionCanvas)
+        {
+            canvas.SetActive(enable);
+        }
+        if (enable)
+            timeLeftTurn.StartTimer();
+        else
+            timeLeftTurn.StopTimer();
+        timeLeftTurn.Reset();
     }
 
     public void EndTurn()
@@ -117,5 +128,10 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsPlayerInSelectingState()
     {
         return isCurrentlySelecting;
+    }
+
+    public void NotifyTimeIsUp()
+    {
+        playerMov.ForceSelecting();
     }
 }

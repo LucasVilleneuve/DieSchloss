@@ -34,8 +34,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isMoving = false;
     private bool dirSelected = false;
     private bool isCurrentDirValid = false;
-    private Direction currentDir = Direction.UP;
-    private Vector2 currentDirVec = new Vector2();
+    private Direction currentDir = Direction.RIGHT;
+    private Vector2 currentDirVec = new Vector2(1, 0);
     private bool confirmButtonPressed = false;
 
     private Image dirArrowImg;
@@ -78,9 +78,16 @@ public class PlayerMovement : MonoBehaviour
         Vector2 pos = transform.position;
         Vector2 targetPos = pos + dir;
 
-        //Debug.Log("Before moving");
-        yield return StartCoroutine(SmoothMovement(targetPos));
-        //Debug.Log("After moving");
+        if (CanMoveToTile(targetPos))
+        {
+            //Debug.Log("Before moving");
+            yield return StartCoroutine(SmoothMovement(targetPos));
+            //Debug.Log("After moving");
+        }
+        else
+        {
+            // TODO Change direction and move there
+        }
 
         psm.ClearCurrentAction();
         psm.EndTurn();
@@ -180,5 +187,10 @@ public class PlayerMovement : MonoBehaviour
 
         isCurrentDirValid = CanMoveToTile(targetPos);
         ChangeSpriteDirection(isCurrentDirValid);
+    }
+
+    public void ForceSelecting()
+    {
+        FinishedSelecting();
     }
 }

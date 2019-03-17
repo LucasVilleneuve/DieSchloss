@@ -3,7 +3,12 @@ guid: 35e9716f18d7c6544a5362e07fe98695
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - ground: {instanceID: 0}
+  - collideable: {instanceID: 0}
+  - dirArrow: {instanceID: 0}
+  - arrowSprite: {fileID: 21300000, guid: ae6d83f5c54556345bd85f0ed647a225, type: 3}
+  - crossSprite: {fileID: 21300000, guid: 4ff8377034be16a45b6c8327469c48e5, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
