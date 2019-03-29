@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(UsableObject))]
 public class PickUp : MonoBehaviour
 {
     private PlayerStateMachine psm;
+    private PlayerInventory pInv;
     private GameObject playerGo;
     private Canvas canvasInteraction;
+    private UsableObject obj;
 
     private bool pickUpInputPressed = false;
     private bool playerClose = false;
@@ -15,7 +18,9 @@ public class PickUp : MonoBehaviour
     {
         playerGo = GameObject.FindGameObjectWithTag("Player");
         psm = playerGo.GetComponent<PlayerStateMachine>();
+        pInv = playerGo.GetComponent<PlayerInventory>();
         canvasInteraction = GetComponentInChildren<Canvas>();
+        obj = GetComponent<UsableObject>();
     }
 
     private void Update()
@@ -57,8 +62,9 @@ public class PickUp : MonoBehaviour
 
     private void Pick()
     {
-        Debug.Log("Collected");
-        // TODO Place in inventory
+        Debug.Log("Collecting " + obj.ToString());
+
+        pInv.Add(obj);
         EnableCanvas(false);
         Destroy(this.gameObject);
     }

@@ -6390,6 +6390,27 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1375211470 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4138642196118831663, guid: bff51b034c8ace942a6c82846cb0a579,
+    type: 3}
+  m_PrefabInstance: {fileID: 4138642195339566418}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1375211471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375211470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c12b5569df3ebb24dbaa88b38f885c7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 1
+  objName: Key to door
+  sprite: {fileID: 0}
 --- !u!1 &1430203836
 GameObject:
   m_ObjectHideFlags: 0
@@ -6691,6 +6712,7 @@ GameObject:
   - component: {fileID: 2015789022}
   - component: {fileID: 2015789023}
   - component: {fileID: 2015789024}
+  - component: {fileID: 2015789018}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -6698,6 +6720,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2015789018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015789017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92de54304a2330e48885b4b9fe67d8c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: []
 --- !u!50 &2015789019
 Rigidbody2D:
   serializedVersion: 4
