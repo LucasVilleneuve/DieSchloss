@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class UsableObject : MonoBehaviour
 {
-    public uint id;
-    public string objName;
-    public Sprite sprite;
+    public int id = -1;
+    public string objName = "";
+    public Sprite sprite = null;
 
     public UsableObject(uint id, string name)
     {
-        this.id = id;
+        this.id = (int)id;
         this.objName = name;
     }
 
