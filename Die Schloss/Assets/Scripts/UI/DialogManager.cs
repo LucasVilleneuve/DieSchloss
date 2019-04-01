@@ -4,37 +4,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
 
-//public class DialogManager : Singleton<DialogManager>
-public class DialogManager : MonoBehaviour
+
+public class DialogManager : Singleton<DialogManager>
 {
     // It is not recommended to simply enqueue messages. Use AddMessage() for Evaluations
     public Queue<Message> messages = new Queue<Message>();
-    private Message current = null;
-    public string display = "";
+    public Message current = null;
+    public string display = "flibo";
 
+    public DialogHandler handler = null;
 
-    void Start()
-    {
-        //////////
-        //// test
-        //current = new Message("bonjour");
-        //Thread.Sleep(1800);
+    //void Start()
+    //{
+    //    //////////
+    //    //// test
+    //    current = new Message("bonjour");
+    //    Thread.Sleep(1800);
 
-        //AddMEssage(new HighMsg("toma Suce"));
+    //    AddMEssage(new HighMsg("toma Suce"));
 
-        //AddMEssage(new MedMsg("cuit"));
-        //this.UpdateMessage();
+    //    AddMEssage(new MedMsg("cuit"));
+    //    this.UpdateMessage();
 
-        //// end
-        //////////
-    }
+    //    //// end
+    //    //////////
+    //}
 
 
     // Called to add a new message for display.
     // Depending of its level, it will be dropped, it will replace the current message or it will be added to the queue for later display.
     // If it is added to the queue but not displayed within the given time, it will be dropped as well.
     // (Message will always be dropped and MandMsg will always replace)
-    public void AddMEssage(Message msg)
+    public void AddMessage(Message msg)
     {
         Debug.Log("Adding new message: [" + msg.msg + "].");
         Message.Action tmp;
@@ -70,7 +71,6 @@ public class DialogManager : MonoBehaviour
     // If not, the next element in the queue is evaluated (to see if it hasn't expired) and displayed.
     public void UpdateMessage()
     {
-        Debug.Log("updating messages");
         if (messages.Count == 0)
         {
             current = null;
@@ -92,7 +92,7 @@ public class DialogManager : MonoBehaviour
         if (tmp == null && current != null) { display = current.msg; }
         else { display = tmp; }
 
-        Debug.Log("new display: [" + display + "]");
+        if (handler) { handler.setMessage(display); }
     }
 }
 
