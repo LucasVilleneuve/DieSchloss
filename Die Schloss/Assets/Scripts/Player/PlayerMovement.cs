@@ -170,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
         TileBase groundTile = GetTile(ground, pos);
         TileBase collideableTile = GetTile(collideable, pos);
 
-        if (groundTile == false) return false;
+        if (groundTile == null) return false;
         if (collideableTile != null) return false;
         return true;
     }
