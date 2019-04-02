@@ -13,13 +13,16 @@ public class PlayerInventory : MonoBehaviour
 
     public void Remove(UsableObject obj)
     {
-        if (obj != null)
-            inventory.Remove(obj);
+        if (obj is null)
+            return;
+        inventory.Remove(obj);
     }
 
-    public void Remove(uint id)
+    public void Remove(int id)
     {
-        Remove(Get((int)id));
+        UsableObject ret = Get(id);
+        if (ret is null) return;
+        Remove(ret);
     }
 
     /// <summary>
@@ -30,13 +33,6 @@ public class PlayerInventory : MonoBehaviour
     public UsableObject Get(int id)
     {
         UsableObject ret = inventory.Find(obj => obj.id == id);
-        if (ret == null)
-        {
-
-            Debug.Log("Returning " + ret);
-            Debug.Log("Returning null");
-        }
-
         return ret;
     }
 
@@ -45,7 +41,6 @@ public class PlayerInventory : MonoBehaviour
         string ret = "";
         foreach (UsableObject obj in inventory)
         {
-            Debug.Log("Obj is null = " + (obj == null));
             ret += obj.ToString() + '\n';
         }
         return ret;

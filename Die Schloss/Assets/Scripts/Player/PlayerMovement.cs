@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Tilemap ground;
     [SerializeField] private Tilemap collideable;
+    [SerializeField] private GameObject interactiveObstaclesTilemap;
     [SerializeField] private GameObject dirArrow;
     [SerializeField] private Sprite arrowSprite;
     [SerializeField] private Sprite crossSprite;
@@ -24,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     /* Components */
     private PlayerStateMachine psm;
+    private List<InteractiveObstacle> interactiveObstacles = new List<InteractiveObstacle>();
 
     /* Inputs */
     private float hInput = 0f;
@@ -44,6 +47,13 @@ public class PlayerMovement : MonoBehaviour
     {
         psm = GetComponent<PlayerStateMachine>();
         dirArrowImg = dirArrow.GetComponentInChildren<Image>();
+
+
+        foreach (Transform child in interactiveObstaclesTilemap.transform)
+        {
+            Debug.Log("Adding a child " + child.gameObject);
+            interactiveObstacles.Add(child.gameObject.GetComponent<InteractiveObstacle>());
+        }
     }
 
     private void Update()
@@ -66,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
         {
             FinishedSelecting();
         }
+
+        CheckIfCurrentDirIsValid();
     }
 
     public void MakePlayerMove()
@@ -168,10 +180,14 @@ public class PlayerMovement : MonoBehaviour
     private bool CanMoveToTile(Vector2 pos)
     {
         TileBase groundTile = GetTile(ground, pos);
-        TileBase collideableTile = GetTile(collideable, pos);
-
         if (groundTile == null) return false;
+
+        TileBase collideableTile = GetTile(collideable, pos);
         if (collideableTile != null) return false;
+
+        InteractiveObstacle obstacleTile = GetInteractiveObstacle(interactiveObstacles, pos);
+        if (obstacleTile != null && obstacleTile.IsBlocking()) return false;
+
         return true;
     }
 
@@ -192,5 +208,25 @@ public class PlayerMovement : MonoBehaviour
     public void ForceSelecting()
     {
         FinishedSelecting();
+    }
+
+    private InteractiveObstacle GetInteractiveObstacle(List<InteractiveObstacle> obstacles, Vector2 pos)
+    {
+        Vector2 obstaclePos;
+        foreach (InteractiveObstacle obstacle in obstacles)
+        {
+            obstaclePos = obstacle.transform.position;
+            if (IsWithinPos(pos.x, obstaclePos.x, obstaclePos.x + obstacle.width) &&
+                IsWithinPos(pos.y, obstaclePos.y, obstaclePos.y + obstacle.height))
+            {
+                return obstacle;
+            }
+        }
+        return null;
+    }
+
+    private bool IsWithinPos(float value, float floor, float top)
+    {
+        return (value >= floor && value < top);
     }
 }

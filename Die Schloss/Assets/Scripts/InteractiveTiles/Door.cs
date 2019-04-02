@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Door : MonoBehaviour
+public class Door : InteractiveObstacle
 {
     public int idKeyItemAssociated = -1;
     public bool isLocked = true;
@@ -13,14 +13,18 @@ public class Door : MonoBehaviour
     private bool playerClose = false;
     private bool openInputPressed = false;
 
-    void Awake()
+    private void Awake()
     {
         GameObject playerGo = GameObject.FindGameObjectWithTag("Player");
         playerInv = playerGo.GetComponent<PlayerInventory>();
         psm = playerGo.GetComponent<PlayerStateMachine>();
         canvasInteraction = GetComponentInChildren<Canvas>();
         anim = GetComponent<Animator>();
-        anim.SetBool("locked", isLocked);
+    }
+
+    private void Start()
+    {
+        Lock(isLocked);
     }
 
     private void Update()
@@ -69,10 +73,9 @@ public class Door : MonoBehaviour
 
         EnableCanvas(false);
 
-        playerInv.Remove(obj);
+        playerInv.Remove(obj.id);
 
-        isLocked = false;
-        anim.SetBool("locked", false);
+        Lock(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -81,7 +84,6 @@ public class Door : MonoBehaviour
 
         if (go.tag != "Player") return;
 
-        Debug.Log("Player close");
         playerClose = true;        
     }
 
@@ -98,5 +100,12 @@ public class Door : MonoBehaviour
     {
         if (enable == canvasInteraction.enabled) return;
         canvasInteraction.enabled = enable;
+    }
+
+    private void Lock(bool enable)
+    {
+        isLocked = enable;
+        SetBlocking(enable);
+        anim.SetBool("locked", enable);
     }
 }
