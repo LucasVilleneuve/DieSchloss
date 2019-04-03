@@ -25,7 +25,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Player start");
+        //Debug.Log("Player start");
         gsm = GameObject.FindGameObjectWithTag("GameStateMachine").GetComponent<GameStateMachine>();
         playerMov = GetComponent<PlayerMovement>();
     }

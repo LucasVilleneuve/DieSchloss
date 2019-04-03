@@ -3,32 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
-
+using System.Timers;
 
 public class DialogManager : Singleton<DialogManager>
 {
     // It is not recommended to simply enqueue messages. Use AddMessage() for Evaluations
-    public Queue<Message> messages = new Queue<Message>();
-    public Message current = null;
-    public string display = "flibo";
+    private Queue<Message> messages = new Queue<Message>();
+    private IEnumerator callback = null;
+
+    private Message current = null;
+    private string display = null;
 
     public DialogHandler handler = null;
 
-    //void Start()
-    //{
-    //    //////////
-    //    //// test
-    //    current = new Message("bonjour");
-    //    Thread.Sleep(1800);
-
-    //    AddMEssage(new HighMsg("toma Suce"));
-
-    //    AddMEssage(new MedMsg("cuit"));
-    //    this.UpdateMessage();
-
-    //    //// end
-    //    //////////
-    //}
+    DialogManager()
+    {
+        // Create a timer with a two second interval.
+        //aTimer = new System.Timers.Timer(3000);
+        // Hook up the Elapsed event for the timer. 
+        //aTimer.AutoReset = false;
+    }
 
 
     // Called to add a new message for display.
@@ -37,40 +31,52 @@ public class DialogManager : Singleton<DialogManager>
     // (Message will always be dropped and MandMsg will always replace)
     public void AddMessage(Message msg)
     {
+        if (callback != null)
+        {
+            StopCoroutine(callback);
+            callback = null;
+        }
         Debug.Log("Adding new message: [" + msg.msg + "].");
         Message.Action tmp;
-        
+
         if (current == null) {
-            //Debug.Log("displaying");
+            Debug.Log("default displaying");
             current = msg;
-            this.updateDisplay();
+            updateDisplay();
         }
         else {
             tmp = msg.Evaluate(current.level);
             switch (tmp)
             {
                 case Message.Action.Drop:
-                    //Debug.Log("dropping");
+                    Debug.Log("dropping");
                     return;
                 case Message.Action.Display:
-                    //Debug.Log("displaying");
+                    Debug.Log("displaying");
                     current = msg;
-                    this.updateDisplay();
+                    updateDisplay();
                     break;
                 case Message.Action.Wait:
-                    //Debug.Log("queuing");
+                    Debug.Log("queuing");
                     messages.Enqueue(msg);
                     break;
             }
         }
+        //aTimer.Elapsed += UpdateMessage;
+        //aTimer.Enabled = true;
+        callback = UpdateMessage(3);
+        StartCoroutine(callback);
     }
 
 
-    // Called whenever the current message expire.
+    // Called whenever the current message expires.
     // If the queue is empty, the display turns off.
     // If not, the next element in the queue is evaluated (to see if it hasn't expired) and displayed.
-    public void UpdateMessage()
+    public IEnumerator UpdateMessage(float sec)
     {
+        yield return new WaitForSeconds(sec);
+        //aTimer.Enabled = false;
+        Debug.Log("changing message.");
         if (messages.Count == 0)
         {
             current = null;
@@ -81,6 +87,8 @@ public class DialogManager : Singleton<DialogManager>
             // check if the message's time limit was reached /!\
             current = messages.Dequeue();
             this.updateDisplay();
+            callback = UpdateMessage(3);
+            StartCoroutine(callback);
         }
     }
 
@@ -95,11 +103,3 @@ public class DialogManager : Singleton<DialogManager>
         if (handler) { handler.setMessage(display); }
     }
 }
-
-//public class MyClass : MonoBehaviour
-//{
-//    private void OnEnable()
-//    {
-//        Debug.Log(MySingleton.Instance.MyTestString);
-//    }
-//}

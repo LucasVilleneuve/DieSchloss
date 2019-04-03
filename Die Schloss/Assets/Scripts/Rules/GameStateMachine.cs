@@ -21,7 +21,7 @@ public class GameStateMachine : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("GSM start");
+        //Debug.Log("GSM start");
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStateMachine>();
         currentAction = Action.START;
     }
@@ -92,7 +92,7 @@ public class GameStateMachine : MonoBehaviour
 
     private void PlayerTurn()
     {
-        Debug.Log("It's player's turn");
+        //Debug.Log("It's player's turn");
         player.currentState = PlayerStateMachine.PlayerState.SELECTING;
         currentAction = Action.WAIT;
     }

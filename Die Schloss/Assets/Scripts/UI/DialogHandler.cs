@@ -12,17 +12,15 @@ public class DialogHandler : MonoBehaviour
         DialogManager.Instance.handler = this;
 
         // init
-        setVisible(false);
+        gameObject.SetActive(false);
         message.text = null;
     }
 
 
-    void setVisible(bool val) { gameObject.SetActive(val); }
-     
-
     public void setMessage(string msg)
     {
-        setVisible(!(msg == null || msg == ""));
+        Debug.Log("ouioui nouveau message [" + msg + "]");
+        gameObject.SetActive(!(msg == null || msg == ""));
         message.text = msg;
     }
 
