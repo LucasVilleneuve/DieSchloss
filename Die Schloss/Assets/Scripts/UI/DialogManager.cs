@@ -16,14 +16,6 @@ public class DialogManager : Singleton<DialogManager>
 
     public DialogHandler handler = null;
 
-    DialogManager()
-    {
-        // Create a timer with a two second interval.
-        //aTimer = new System.Timers.Timer(3000);
-        // Hook up the Elapsed event for the timer. 
-        //aTimer.AutoReset = false;
-    }
-
 
     // Called to add a new message for display.
     // Depending of its level, it will be dropped, it will replace the current message or it will be added to the queue for later display.
@@ -31,18 +23,11 @@ public class DialogManager : Singleton<DialogManager>
     // (Message will always be dropped and MandMsg will always replace)
     public void AddMessage(Message msg)
     {
-        if (callback != null)
-        {
-            StopCoroutine(callback);
-            callback = null;
-        }
         Debug.Log("Adding new message: [" + msg.msg + "].");
         Message.Action tmp;
 
         if (current == null) {
             Debug.Log("default displaying");
-            current = msg;
-            updateDisplay();
         }
         else {
             tmp = msg.Evaluate(current.level);
@@ -53,21 +38,34 @@ public class DialogManager : Singleton<DialogManager>
                     return;
                 case Message.Action.Display:
                     Debug.Log("displaying");
-                    current = msg;
-                    updateDisplay();
                     break;
                 case Message.Action.Wait:
                     Debug.Log("queuing");
                     messages.Enqueue(msg);
-                    break;
+                    return;
             }
         }
-        //aTimer.Elapsed += UpdateMessage;
-        //aTimer.Enabled = true;
+        tryStopCB();
+        current = msg;
+        updateDisplay();
+        startCB();
+    }
+
+
+    private void tryStopCB()
+    {
+        if (callback != null)
+        {
+            StopCoroutine(callback);
+            callback = null;
+        }
+    }
+
+    private void startCB()
+    {
         callback = UpdateMessage(3);
         StartCoroutine(callback);
     }
-
 
     // Called whenever the current message expires.
     // If the queue is empty, the display turns off.
@@ -75,7 +73,6 @@ public class DialogManager : Singleton<DialogManager>
     public IEnumerator UpdateMessage(float sec)
     {
         yield return new WaitForSeconds(sec);
-        //aTimer.Enabled = false;
         Debug.Log("changing message.");
         if (messages.Count == 0)
         {
@@ -84,12 +81,23 @@ public class DialogManager : Singleton<DialogManager>
         }
         else
         {
-            // check if the message's time limit was reached /!\
-            current = messages.Dequeue();
+            current = getLastValidMessage();
             this.updateDisplay();
             callback = UpdateMessage(3);
             StartCoroutine(callback);
         }
+    }
+
+
+    // This function will recursively search for a not expired message to display.
+    private Message getLastValidMessage()
+    {
+        if (messages.Count == 0)
+            return null;
+        Message tmp = messages.Dequeue();
+        if (tmp.HasExpired())
+            return getLastValidMessage();
+        return tmp;
     }
 
 
