@@ -35,6 +35,7 @@ public class Message
 
     // overridden values
     public float keepFor = 0.0F;
+    public float displayFor = 2.0F;
     public Level level = Level.Low;
 }
 
