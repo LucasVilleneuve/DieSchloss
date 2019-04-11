@@ -23,14 +23,8 @@ public class Message
         return Action.Drop;
     }
 
-    public bool HasExpired()
-    {
-        // true if the message has expired
-        return (sw != null && sw.Elapsed.TotalSeconds > keepFor);
-    }
-
     // data
-    public Stopwatch sw = null;
+    public Stopwatch sw;
     public string msg;
 
     // overridden values
