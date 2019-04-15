@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     /* Components */
     private PlayerStateMachine psm;
     private List<InteractiveObstacle> interactiveObstacles = new List<InteractiveObstacle>();
+    private Animator anim;
 
     /* Inputs */
     private float hInput = 0f;
@@ -47,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     {
         psm = GetComponent<PlayerStateMachine>();
         dirArrowImg = dirArrow.GetComponentInChildren<Image>();
-
+        anim = GetComponentInChildren<Animator>();
 
         foreach (Transform child in interactiveObstaclesTilemap.transform)
         {
@@ -93,7 +95,9 @@ public class PlayerMovement : MonoBehaviour
         if (CanMoveToTile(targetPos))
         {
             //Debug.Log("Before moving");
+            PlayAnimation(currentDir);
             yield return StartCoroutine(SmoothMovement(targetPos));
+            StopAnimation();
             //Debug.Log("After moving");
         }
         else
@@ -108,6 +112,8 @@ public class PlayerMovement : MonoBehaviour
     private void GetNewDirection(Vector2 dir)
     {
         float rotationAngle = 0f;
+
+        if (dir.x != 0) dir.y = 0;
 
         if (dir == Vector2.up)
         {
@@ -228,5 +234,29 @@ public class PlayerMovement : MonoBehaviour
     private bool IsWithinPos(float value, float floor, float top)
     {
         return (value >= floor && value < top);
+    }
+
+    private void PlayAnimation(Direction dir)
+    {
+        switch (dir)
+        {
+            case Direction.RIGHT:
+                anim.Play("Walking Right");
+            break;
+            case Direction.LEFT:
+                anim.Play("Walking Left");
+            break;
+            case Direction.UP:
+                anim.Play("Walking Up");
+            break;
+            case Direction.DOWN:
+                anim.Play("Walking Down");
+            break;
+        }
+    }
+
+    private void StopAnimation()
+    {
+        anim.Play("Idle");
     }
 }
