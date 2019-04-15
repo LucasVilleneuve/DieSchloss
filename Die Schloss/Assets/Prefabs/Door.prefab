@@ -409,6 +409,8 @@ MonoBehaviour:
   width: 1
   idKeyItemAssociated: -1
   isLocked: 1
+  tile: {fileID: 11400000, guid: b992714ccfbd32d4aae9d33184723ebd, type: 2}
+  collidable: {fileID: 0}
 --- !u!95 &7500719842703387163
 Animator:
   serializedVersion: 3
