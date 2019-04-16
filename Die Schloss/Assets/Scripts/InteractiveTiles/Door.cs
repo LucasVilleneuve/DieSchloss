@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Door : InteractiveObstacle
 {
@@ -9,6 +10,10 @@ public class Door : InteractiveObstacle
     private PlayerStateMachine psm;
     private Canvas canvasInteraction;
     private Animator anim;
+    [SerializeField] private TileBase tile;
+    private Tilemap collidable;
+
+
 
     private bool playerClose = false;
     private bool openInputPressed = false;
@@ -20,6 +25,7 @@ public class Door : InteractiveObstacle
         psm = playerGo.GetComponent<PlayerStateMachine>();
         canvasInteraction = GetComponentInChildren<Canvas>();
         anim = GetComponent<Animator>();
+        collidable = GameObject.Find("Tilemap_Collideable").GetComponentInChildren<Tilemap>();
     }
 
     private void Start()
@@ -107,5 +113,9 @@ public class Door : InteractiveObstacle
         isLocked = enable;
         SetBlocking(enable);
         anim.SetBool("locked", enable);
+        if (enable)
+            collidable.SetTile(collidable.WorldToCell(transform.position), tile);
+        else
+            collidable.SetTile(collidable.WorldToCell(transform.position), null);
     }
 }
