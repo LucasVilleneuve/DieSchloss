@@ -6,9 +6,15 @@ public class PlayerInventory : MonoBehaviour
 {
     public List<UsableObject> inventory; // DEBUG
 
+    [SerializeField] private Inventory inventoryUi;
+
     public void Add(UsableObject obj)
     {
+        if (obj is null)
+            return;
         inventory.Add(obj);
+        if (inventoryUi)
+            inventoryUi.AddItem(obj);
     }
 
     public void Remove(UsableObject obj)
@@ -16,6 +22,8 @@ public class PlayerInventory : MonoBehaviour
         if (obj is null)
             return;
         inventory.Remove(obj);
+        if (inventoryUi)
+            inventoryUi.RemoveItem(obj);
     }
 
     public void Remove(int id)
