@@ -5168,7 +5168,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &768644070
 Light:
   m_ObjectHideFlags: 0
@@ -5417,6 +5417,11 @@ PrefabInstance:
       propertyPath: interactiveObstaclesTilemap
       value: 
       objectReference: {fileID: 498096302}
+    - target: {fileID: 7006464883106410578, guid: 5b4fcc55eaf74e94595244f9bf0b60b6,
+        type: 3}
+      propertyPath: m_Range
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b4fcc55eaf74e94595244f9bf0b60b6, type: 3}
 --- !u!1 &986698815
@@ -7124,6 +7129,11 @@ PrefabInstance:
       propertyPath: prey
       value: 
       objectReference: {fileID: 1161290881}
+    - target: {fileID: 7495835102307168927, guid: aa432f32a8de3be4cb5e49b1308d9f90,
+        type: 3}
+      propertyPath: m_Range
+      value: 2.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa432f32a8de3be4cb5e49b1308d9f90, type: 3}
 --- !u!4 &1743681677 stripped
