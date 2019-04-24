@@ -29,11 +29,15 @@ public class MonsterMovement : MonoBehaviour
     private bool isCurrentDirValid = false;
     private Direction currentDir = Direction.RIGHT;
     private Vector2 currentDirVec = new Vector2(1, 0);
+    private Animator anim;
+
     // Start is called before the first frame update
     private void Awake()
     {
         msm = GetComponent<MonsterStateMachine>();
         mb = GetComponent<MonsterBrain>();
+        anim = GetComponentInChildren<Animator>();
+
     }
 
     // Update is called once per frame
@@ -55,7 +59,9 @@ public class MonsterMovement : MonoBehaviour
         if (CanMoveToTile(targetPos))
         {
             //Debug.Log("Before moving");
+            PlayAnimation(currentDir);
             yield return StartCoroutine(SmoothMovement(targetPos));
+            StopAnimation();
             //Debug.Log("After moving");
         }
         else
@@ -145,5 +151,29 @@ public class MonsterMovement : MonoBehaviour
         isMoving = false;
 
         //Debug.Log("Finished moving");
+    }
+
+    private void PlayAnimation(Direction dir)
+    {
+        switch (dir)
+        {
+            case Direction.RIGHT:
+                anim.Play("Walking Right");
+                break;
+            case Direction.LEFT:
+                anim.Play("Walking Left");
+                break;
+            case Direction.UP:
+                anim.Play("Walking Up");
+                break;
+            case Direction.DOWN:
+                anim.Play("Walking Down");
+                break;
+        }
+    }
+
+    private void StopAnimation()
+    {
+        anim.Play("Idle");
     }
 }
