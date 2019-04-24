@@ -5,13 +5,12 @@ using UnityEngine;
 public class MonsterAttack : MonoBehaviour
 {
 
-    private Animator anim;
     public GameObject Explosion;
+    private MonsterBrain mb;
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponentInChildren<Animator>();
-
+        mb = GetComponent<MonsterBrain>();
     }
 
     // Update is called once per frame
@@ -30,6 +29,6 @@ public class MonsterAttack : MonoBehaviour
     {
 
         yield return new WaitForSeconds(0.3f);
-        anim.SetBool("isDead", true);
+        mb.ActDead(true);
     }
 }

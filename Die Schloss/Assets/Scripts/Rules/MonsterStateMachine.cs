@@ -21,6 +21,7 @@ public class MonsterStateMachine : MonoBehaviour
     private int current_turn = 0;
     private int last_turn = 0;
     private bool isDead = false;
+    private int TurnDead = 0;
 
     public MonsterState currentState = MonsterState.WAIT;
     public HandleTurn currentAction = null;
@@ -65,6 +66,12 @@ public class MonsterStateMachine : MonoBehaviour
         else
         {
             currentState = MonsterState.WAIT;
+            TurnDead--;
+            if (TurnDead <= 0)
+            {
+                isDead = false;
+                mb.ActDead(isDead);
+            }
             EndTurn();
         }
     }
@@ -136,6 +143,7 @@ public class MonsterStateMachine : MonoBehaviour
         {
             ma.Atack();
             isDead = true;
+            TurnDead = 4;
         }
         EndTurn();
     }
