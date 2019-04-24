@@ -70,7 +70,7 @@ public class MonsterMovement : MonoBehaviour
         }
 
         msm.ClearCurrentAction();
-        msm.EndTurn();
+        msm.CheckForAttack();
     }
 
     private bool CanMoveToTile(Vector2 pos)
