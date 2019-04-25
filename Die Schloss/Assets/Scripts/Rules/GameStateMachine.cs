@@ -106,7 +106,6 @@ public class GameStateMachine : MonoBehaviour
 
     private void PlayerTurn()
     {
-        Debug.Log("It's player's turn");
         player.currentState = PlayerStateMachine.PlayerState.SELECTING;
         currentAction = Action.WAIT;
     }
@@ -115,14 +114,19 @@ public class GameStateMachine : MonoBehaviour
     {
         currentAction = Action.ENEMYTURN;
         player.currentState = PlayerStateMachine.PlayerState.WAIT;
-        Debug.Log("End of player turn");
     }
 
     private void MonsterTurn()
     {
-        Debug.Log("It's monster's turn");
-        monster.currentState = MonsterStateMachine.MonsterState.SELECTING;
-        currentAction = Action.WAIT;
+        if (monster)
+        {
+            monster.currentState = MonsterStateMachine.MonsterState.SELECTING;
+            currentAction = Action.WAIT;
+        }
+        else
+        {
+            currentAction = Action.END;
+        }
     }
 
     public void EndMonsterTurn()

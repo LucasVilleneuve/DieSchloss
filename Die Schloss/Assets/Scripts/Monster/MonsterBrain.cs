@@ -9,10 +9,11 @@ public class MonsterBrain : MonoBehaviour
     [SerializeField] private Tilemap ground;
     [SerializeField] private Tilemap collideable;
     [SerializeField] private GameObject prey;
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
-        
+        anim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -43,5 +44,19 @@ public class MonsterBrain : MonoBehaviour
             return MonsterMovement.Direction.DOWN;
         }
         return MonsterMovement.Direction.NOWHERE;
+    }
+
+    public bool IsInRange()
+    {
+        List<Vector3> path = Pathfinding.AStar.FindPath(collideable, transform.position, prey.transform.position);
+        if (path != null && path.Count <= 2)
+            return true;
+        return false;
+    }
+
+    public void ActDead( bool isDead)
+    {
+
+        anim.SetBool("isDead", isDead);
     }
 }

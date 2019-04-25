@@ -16,8 +16,12 @@ public class MonsterStateMachine : MonoBehaviour
 
     private MonsterMovement monsterMov;
     private GameStateMachine gsm;
+    private MonsterAttack ma;
+    private MonsterBrain mb;
     private int current_turn = 0;
     private int last_turn = 0;
+    private bool isDead = false;
+    private int TurnDead = 0;
 
     public MonsterState currentState = MonsterState.WAIT;
     public HandleTurn currentAction = null;
@@ -28,6 +32,8 @@ public class MonsterStateMachine : MonoBehaviour
     {
         gsm = GameObject.FindGameObjectWithTag("GameStateMachine").GetComponent<GameStateMachine>();
         monsterMov = GetComponent<MonsterMovement>();
+        mb = GetComponent<MonsterBrain>();
+        ma = GetComponent<MonsterAttack>();
     }
 
 
@@ -51,9 +57,23 @@ public class MonsterStateMachine : MonoBehaviour
 
     private void SelectAction()
     {
-        current_turn += 1;
-        currentState = MonsterState.WAIT;
-        EnableSelecting(true);
+        if (!isDead)
+        {
+            current_turn += 1;
+            currentState = MonsterState.WAIT;
+            EnableSelecting(true);
+        }
+        else
+        {
+            currentState = MonsterState.WAIT;
+            TurnDead--;
+            if (TurnDead <= 0)
+            {
+                isDead = false;
+                mb.ActDead(isDead);
+            }
+            EndTurn();
+        }
     }
 
     public void EnableSelecting(bool enable)
@@ -115,5 +135,16 @@ public class MonsterStateMachine : MonoBehaviour
         };
 
         gsm.CollectAction(endturn);
+    }
+
+    public void CheckForAttack()
+    {
+        if (mb.IsInRange())
+        {
+            ma.Atack();
+            isDead = true;
+            TurnDead = 4;
+        }
+        EndTurn();
     }
 }
