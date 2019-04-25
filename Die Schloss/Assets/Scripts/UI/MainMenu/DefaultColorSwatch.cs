@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using PixelsoftGames.PixelUI;
+using PixelsoftGames.PixelUI;
 
 public class DefaultColorSwatch : MonoBehaviour
 {
@@ -14,8 +14,8 @@ public class DefaultColorSwatch : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //GetComponents<SwatchHandler>()[0].ChangeColors(imageColor, textColor);
-        //GetComponents<SwatchHandler>()[1].ChangeColors(subImageColor, subTextColor);
+        GetComponents<SwatchHandler>()[0].ChangeColors(imageColor, textColor);
+        GetComponents<SwatchHandler>()[1].ChangeColors(subImageColor, subTextColor);
     }
 
 }
