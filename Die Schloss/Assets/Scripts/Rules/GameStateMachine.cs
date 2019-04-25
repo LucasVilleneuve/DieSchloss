@@ -18,12 +18,16 @@ public class GameStateMachine : MonoBehaviour
     public Action currentAction;
     public Queue<HandleTurn> actions = new Queue<HandleTurn>();
     private PlayerStateMachine player;
+    private MonsterStateMachine monster;
 
     private void Start()
     {
-        //Debug.Log("GSM start");
+        Debug.Log("GSM start");
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStateMachine>();
+        monster = GameObject.FindGameObjectWithTag("Monster").GetComponent<MonsterStateMachine>();
+
         currentAction = Action.START;
+
     }
 
     private void Update()
@@ -55,8 +59,7 @@ public class GameStateMachine : MonoBehaviour
                 break;
 
             case (Action.ENEMYTURN):
-                // Do stuff
-                currentAction = Action.END;
+                MonsterTurn();
                 break;
 
             case (Action.END):
@@ -86,13 +89,23 @@ public class GameStateMachine : MonoBehaviour
             EndPlayerTurn();
             return;
         }
+        if (turn.type == "Monster")
+        {
+            monster.currentAction = turn;
+            monster.currentState = MonsterStateMachine.MonsterState.PERFORMACTION;
+        }
+        else if (turn.type == "MonsterEndTurn")
+        {
+            monster.currentState = MonsterStateMachine.MonsterState.WAIT;
+            EndMonsterTurn();
+            return;
+        }
 
         currentAction = Action.WAIT;
     }
 
     private void PlayerTurn()
     {
-        //Debug.Log("It's player's turn");
         player.currentState = PlayerStateMachine.PlayerState.SELECTING;
         currentAction = Action.WAIT;
     }
@@ -101,6 +114,25 @@ public class GameStateMachine : MonoBehaviour
     {
         currentAction = Action.ENEMYTURN;
         player.currentState = PlayerStateMachine.PlayerState.WAIT;
+    }
+
+    private void MonsterTurn()
+    {
+        if (monster)
+        {
+            monster.currentState = MonsterStateMachine.MonsterState.SELECTING;
+            currentAction = Action.WAIT;
+        }
+        else
+        {
+            currentAction = Action.END;
+        }
+    }
+
+    public void EndMonsterTurn()
+    {
+        currentAction = Action.END;
+        monster.currentState = MonsterStateMachine.MonsterState.WAIT;
         Debug.Log("End of player turn");
     }
 }
