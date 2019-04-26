@@ -3,6 +3,7 @@ using UnityEngine.Tilemaps;
 
 public class Door : InteractiveObstacle
 {
+    public bool needKey = true;
     public int idKeyItemAssociated = -1;
     public bool isLocked = true;
 
@@ -67,19 +68,22 @@ public class Door : InteractiveObstacle
             return;
         }
 
-        UsableObject obj = playerInv.Get(idKeyItemAssociated);
-
-        if (obj is null || obj.id == -1)
+        if (needKey)
         {
-            Debug.Log("The player does not have the key. Cannot open the door.");
-            return;
+            UsableObject obj = playerInv.Get(idKeyItemAssociated);
+
+            if (obj is null || obj.id == -1)
+            {
+                Debug.Log("The player does not have the key. Cannot open the door.");
+                return;
+            }
+    
+            playerInv.Remove(obj.id);
         }
 
         Debug.Log("The door is now opened");
 
         EnableCanvas(false);
-
-        playerInv.Remove(obj.id);
 
         Lock(false);
     }
