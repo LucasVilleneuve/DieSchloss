@@ -8,7 +8,7 @@ public class Door : InteractiveObstacle
     public bool isLocked = true;
 
     private PlayerInventory playerInv;
-    private PlayerStateMachine psm;
+    protected PlayerStateMachine psm;
     private Canvas canvasInteraction;
     private Animator anim;
     [SerializeField] private TileBase tile;
@@ -16,8 +16,8 @@ public class Door : InteractiveObstacle
 
 
 
-    private bool playerClose = false;
-    private bool openInputPressed = false;
+    protected bool playerClose = false;
+    protected bool openInputPressed = false;
 
     private void Awake()
     {
@@ -34,7 +34,7 @@ public class Door : InteractiveObstacle
         Lock(isLocked);
     }
 
-    private void Update()
+    protected void Update()
     {
         openInputPressed = Input.GetButton("Interact");
 
@@ -70,14 +70,11 @@ public class Door : InteractiveObstacle
 
         if (needKey)
         {
-            UsableObject obj = playerInv.Get(idKeyItemAssociated);
+            UsableObject obj = TryToGetKey();
 
-            if (obj is null || obj.id == -1)
-            {
-                Debug.Log("The player does not have the key. Cannot open the door.");
+            if (obj is null)
                 return;
-            }
-    
+
             playerInv.Remove(obj.id);
         }
 
@@ -121,5 +118,18 @@ public class Door : InteractiveObstacle
             collidable.SetTile(collidable.WorldToCell(transform.position), tile);
         else
             collidable.SetTile(collidable.WorldToCell(transform.position), null);
+    }
+
+    protected UsableObject TryToGetKey()
+    {
+        UsableObject obj = playerInv.Get(idKeyItemAssociated);
+
+        if (obj is null || obj.id == -1)
+        {
+            Debug.Log("The player does not have the key. Cannot open the door.");
+            return null;
+        }
+
+        return obj;
     }
 }
