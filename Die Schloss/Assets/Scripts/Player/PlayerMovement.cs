@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     private Direction currentDir = Direction.RIGHT;
     private Vector2 currentDirVec = new Vector2(1, 0);
     private bool confirmButtonPressed = false;
+    public bool IsHiding = false;
 
     private Image dirArrowImg;
 
@@ -97,6 +98,11 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("Before moving");
             PlayAnimation(currentDir);
             yield return StartCoroutine(SmoothMovement(targetPos));
+            if (IsHiding)
+            {
+                IsHiding = false;
+                GetComponentsInChildren<SpriteRenderer>()[0].enabled = true;
+            }
             StopAnimation();
             //Debug.Log("After moving");
         }

@@ -5,16 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(UsableObject))]
 public class PickUp : MonoBehaviour
 {
-    private PlayerStateMachine psm;
+    protected PlayerStateMachine psm;
     private PlayerInventory pInv;
     private GameObject playerGo;
     private Canvas canvasInteraction;
     private UsableObject obj;
 
-    private bool pickUpInputPressed = false;
-    private bool playerClose = false;
+    protected bool pickUpInputPressed = false;
+    protected bool playerClose = false;
 
-    private void Awake()
+    protected void Awake()
     {
         playerGo = GameObject.FindGameObjectWithTag("Player");
         psm = playerGo.GetComponent<PlayerStateMachine>();
@@ -23,7 +23,7 @@ public class PickUp : MonoBehaviour
         obj = GetComponent<UsableObject>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         pickUpInputPressed = Input.GetButton("Interact");
 
@@ -42,7 +42,7 @@ public class PickUp : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    protected virtual void OnTriggerEnter2D(Collider2D collider)
     {
         GameObject go = collider.gameObject;
 
@@ -51,7 +51,7 @@ public class PickUp : MonoBehaviour
         playerClose = true;
     }
 
-    private void OnTriggerExit2D(Collider2D collider)
+    protected virtual void OnTriggerExit2D(Collider2D collider)
     {
         GameObject go = collider.gameObject;
 
@@ -60,7 +60,7 @@ public class PickUp : MonoBehaviour
         playerClose = false;
     }
 
-    private void Pick()
+    virtual protected void Pick()
     {
         Debug.Log("Collecting " + obj.ToString());
 
@@ -69,7 +69,7 @@ public class PickUp : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private void EnableCanvas(bool enable)
+    protected void EnableCanvas(bool enable)
     {
         if (enable == canvasInteraction.enabled) return;
         canvasInteraction.enabled = enable;
