@@ -30,6 +30,7 @@ ExportedObj/
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
+*.png.meta
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
@@ -39,29 +40,6 @@ sysinfo.txt
 *.unitypackage
 
 #Assets
-Die\ Schloss/Assets/Universal Sound FX/
-Die\ Schloss/Assets/InControl/
-Die\ Schloss/Assets/RPG and MMO UI 5/
-Die\ Schloss/Assets/The Dungeon/
-Die\ Schloss/Assets/SciFiGUI/
-Die\ Schloss/Assets/Horror Music Starter Pack/
-Die\ Schloss/Assets/Empty Places/
-Die\ Schloss/Assets/Darkness and Horror Soundtrack/
-Die\ Schloss/Assets/Creatures of the Night/
-Die\ Schloss/Assets/Complete Horror/
-Die\ Schloss/Assets/2D Pixel Top-Down Dungeon Tileset/
-Die Schloss/Assets/The Dungeon.meta
-Die Schloss/Assets/Universal Sound FX.meta
-Die Schloss/Assets/SciFiGUI.meta
-Die Schloss/Assets/RPG and MMO UI 5.meta
-Die Schloss/Assets/Pixel UI.meta
-Die Schloss/Assets/InControl.meta
-Die Schloss/Assets/Horror Music Starter Pack.meta
-Die Schloss/Assets/Empty Places.meta
-Die Schloss/Assets/Darkness and Horror Soundtrack.meta
-Die Schloss/Assets/Creatures of the Night.meta
-Die Schloss/Assets/Complete Horror.meta
-Die Schloss/Assets/2D Pixel Top-Down Dungeon Tileset.meta
 Die Schloss/Assets/3rd Party Assets/
 Die Schloss/Assets/3rd Party Assets.meta
-Die Schloss/Assets/UI/Inventory.meta
+*.meta

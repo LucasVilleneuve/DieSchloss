@@ -3,11 +3,12 @@ using UnityEngine.Tilemaps;
 
 public class Door : InteractiveObstacle
 {
+    public bool needKey = true;
     public int idKeyItemAssociated = -1;
     public bool isLocked = true;
 
     private PlayerInventory playerInv;
-    private PlayerStateMachine psm;
+    protected PlayerStateMachine psm;
     private Canvas canvasInteraction;
     private Animator anim;
     [SerializeField] private TileBase tile;
@@ -15,8 +16,8 @@ public class Door : InteractiveObstacle
 
 
 
-    private bool playerClose = false;
-    private bool openInputPressed = false;
+    protected bool playerClose = false;
+    protected bool openInputPressed = false;
 
     private void Awake()
     {
@@ -33,7 +34,7 @@ public class Door : InteractiveObstacle
         Lock(isLocked);
     }
 
-    private void Update()
+    protected void Update()
     {
         openInputPressed = Input.GetButton("Interact");
 
@@ -67,19 +68,19 @@ public class Door : InteractiveObstacle
             return;
         }
 
-        UsableObject obj = playerInv.Get(idKeyItemAssociated);
-
-        if (obj is null || obj.id == -1)
+        if (needKey)
         {
-            Debug.Log("The player does not have the key. Cannot open the door.");
-            return;
+            UsableObject obj = TryToGetKey();
+
+            if (obj is null)
+                return;
+
+            playerInv.Remove(obj.id);
         }
 
         Debug.Log("The door is now opened");
 
         EnableCanvas(false);
-
-        playerInv.Remove(obj.id);
 
         Lock(false);
     }
@@ -117,5 +118,18 @@ public class Door : InteractiveObstacle
             collidable.SetTile(collidable.WorldToCell(transform.position), tile);
         else
             collidable.SetTile(collidable.WorldToCell(transform.position), null);
+    }
+
+    protected UsableObject TryToGetKey()
+    {
+        UsableObject obj = playerInv.Get(idKeyItemAssociated);
+
+        if (obj is null || obj.id == -1)
+        {
+            Debug.Log("The player does not have the key. Cannot open the door.");
+            return null;
+        }
+
+        return obj;
     }
 }
