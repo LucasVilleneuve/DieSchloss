@@ -8,16 +8,16 @@ public class Door : InteractiveObstacle
     public bool isLocked = true;
 
     private PlayerInventory playerInv;
-    protected PlayerStateMachine psm;
+    private PlayerStateMachine psm;
     private Canvas canvasInteraction;
     private Animator anim;
     [SerializeField] private TileBase tile;
+
+
     private Tilemap collidable;
 
-
-
-    protected bool playerClose = false;
-    protected bool openInputPressed = false;
+    private bool playerClose = false;
+    private bool openInputPressed = false;
 
     private void Awake()
     {
@@ -120,7 +120,7 @@ public class Door : InteractiveObstacle
             collidable.SetTile(collidable.WorldToCell(transform.position), null);
     }
 
-    protected UsableObject TryToGetKey()
+    public UsableObject TryToGetKey()
     {
         UsableObject obj = playerInv.Get(idKeyItemAssociated);
 
@@ -131,5 +131,20 @@ public class Door : InteractiveObstacle
         }
 
         return obj;
+    }
+
+    public bool isPlayerClose()
+    {
+        return playerClose;
+    }
+
+    public bool isOpenInputPressed()
+    {
+        return openInputPressed;
+    }
+
+    public bool isDoorLocked()
+    {
+        return isLocked;
     }
 }

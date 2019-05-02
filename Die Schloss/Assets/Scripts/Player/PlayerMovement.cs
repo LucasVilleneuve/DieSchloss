@@ -200,6 +200,12 @@ public class PlayerMovement : MonoBehaviour
         InteractiveObstacle obstacleTile = GetInteractiveObstacle(interactiveObstacles, pos);
         if (obstacleTile != null && obstacleTile.IsBlocking()) return false;
 
+        if (obstacleTile != null)
+        {
+            Debug.Log("ObstacleTile is blocking");
+        }
+
+
         return true;
     }
 

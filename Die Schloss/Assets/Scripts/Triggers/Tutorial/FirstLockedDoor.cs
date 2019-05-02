@@ -2,16 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FirstLockedDoor : Door
+public class FirstLockedDoor : MonoBehaviour
 {
-    private new void Update()
+    private Door door;
+    private PlayerStateMachine psm;
+
+    private void Start()
     {
-        base.Update();
-        if (playerClose && psm.IsPlayerInSelectingState())
+        door = GetComponent<Door>();
+        GameObject playerGo = GameObject.FindGameObjectWithTag("Player");
+        psm = playerGo.GetComponent<PlayerStateMachine>();
+    }
+
+    private void Update()
+    {
+        if (door.isPlayerClose() && psm.IsPlayerInSelectingState())
         {
-            if (isLocked)
+            if (door.isDoorLocked())
             {
-                if (openInputPressed && TryToGetKey() == null)
+                if (door.isOpenInputPressed() && door.TryToGetKey() == null)
                 {
                     DialogManager.Instance.AddMessage(new MedMsg("Try to find the key."));
                 }
