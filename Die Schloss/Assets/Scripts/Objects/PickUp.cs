@@ -18,9 +18,11 @@ public class PickUp : MonoBehaviour
     protected void Awake()
     {
         playerGo = GameObject.FindGameObjectWithTag("Player");
+        GameObject monsterGo = GameObject.FindGameObjectWithTag("Monster");
         psm = playerGo.GetComponent<PlayerStateMachine>();
         pInv = playerGo.GetComponent<PlayerInventory>();
-        mBrain = GameObject.FindGameObjectWithTag("Monster").GetComponent<MonsterBrain>();
+        if (monsterGo)
+            mBrain = monsterGo.GetComponent<MonsterBrain>();
         canvasInteraction = GetComponentInChildren<Canvas>();
         obj = GetComponent<UsableObject>();
     }
@@ -67,7 +69,8 @@ public class PickUp : MonoBehaviour
         Debug.Log("Collecting " + obj.ToString());
 
         pInv.Add(obj);
-        mBrain.IMadeNoise(gameObject.transform.position, 500);
+        if (mBrain)
+            mBrain.IMadeNoise(gameObject.transform.position, 500);
         EnableCanvas(false);
         Destroy(this.gameObject);
     }

@@ -24,10 +24,11 @@ public class GameStateMachine : MonoBehaviour
     {
         Debug.Log("GSM start");
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStateMachine>();
-        monster = GameObject.FindGameObjectWithTag("Monster").GetComponent<MonsterStateMachine>();
+        GameObject monsterGo = GameObject.FindGameObjectWithTag("Monster");
+        if (monsterGo)
+            monster = monsterGo.GetComponent<MonsterStateMachine>();
 
         currentAction = Action.START;
-
     }
 
     private void Update()

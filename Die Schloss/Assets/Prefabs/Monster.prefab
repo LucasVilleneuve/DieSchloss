@@ -180,8 +180,6 @@ GameObject:
   - component: {fileID: 7495835102837537893}
   - component: {fileID: 7495835102837537898}
   - component: {fileID: 7495835102837537899}
-  - component: {fileID: 7495835102837537896}
-  - component: {fileID: 7495835102837537897}
   - component: {fileID: 7495835102837537894}
   - component: {fileID: 7495835102837537895}
   - component: {fileID: 7495835102837537902}
@@ -304,43 +302,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
---- !u!114 &7495835102837537896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7495835102837537903}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f21f19cd9cc640740a81665925f777ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectionCanvas:
-  - {fileID: 0}
-  - {fileID: 0}
-  timeLeftTurn: {fileID: 0}
-  currentState: 0
-  isCurrentlySelecting: 0
---- !u!114 &7495835102837537897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7495835102837537903}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35e9716f18d7c6544a5362e07fe98695, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ground: {fileID: 0}
-  collideable: {fileID: 0}
-  interactiveObstaclesTilemap: {fileID: 0}
-  dirArrow: {fileID: 0}
-  arrowSprite: {fileID: 21300000, guid: ae6d83f5c54556345bd85f0ed647a225, type: 3}
-  crossSprite: {fileID: 21300000, guid: 4ff8377034be16a45b6c8327469c48e5, type: 3}
-  moveTime: 0.5
 --- !u!114 &7495835102837537894
 MonoBehaviour:
   m_ObjectHideFlags: 0

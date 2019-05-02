@@ -29,6 +29,7 @@ public class MonsterBrain : MonoBehaviour
     public void IMadeNoise(Vector3 pos, int intensity)
     {
         List<Vector3> path = Pathfinding.AStar.FindPath(collideable, transform.position, pos);
+        if (path == null) return;
         if (path.Count <= intensity)
         {
             isThereNoise = true;
@@ -39,6 +40,9 @@ public class MonsterBrain : MonoBehaviour
     public MonsterMovement.Direction GetDirection()
     {
         List<Vector3> path = Pathfinding.AStar.FindPath(collideable, transform.position, prey.transform.position);
+        if (path == null)
+            return MonsterMovement.Direction.NOWHERE;
+
         Debug.Log("PATHCOUNT = " + path.Count);
 
         if (path.Count > sight) // If player is NOT in sight
