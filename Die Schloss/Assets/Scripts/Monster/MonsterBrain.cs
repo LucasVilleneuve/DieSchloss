@@ -10,6 +10,10 @@ public class MonsterBrain : MonoBehaviour
     [SerializeField] private Tilemap collideable;
     [SerializeField] private GameObject prey;
     private Animator anim;
+    private Vector3 lastNoisePos;
+    private bool isThereNoise = false;
+    private int sight = 5;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,28 +26,86 @@ public class MonsterBrain : MonoBehaviour
         
     }
 
+    public void IMadeNoise(Vector3 pos, int intensity)
+    {
+        List<Vector3> path = Pathfinding.AStar.FindPath(collideable, transform.position, pos);
+        if (path.Count <= intensity)
+        {
+            isThereNoise = true;
+            lastNoisePos = pos;
+        }
+    }
+
     public MonsterMovement.Direction GetDirection()
     {
         List<Vector3> path = Pathfinding.AStar.FindPath(collideable, transform.position, prey.transform.position);
-        if (path == null || path.Count <= 2)
-            return MonsterMovement.Direction.NOWHERE;
-        else if (path[1].x > transform.position.x)
+        Debug.Log("PATHCOUNT = " + path.Count);
+
+        if (path.Count > sight) // If player is NOT in sight
         {
-            return MonsterMovement.Direction.RIGHT;
+            if (isThereNoise)
+            {
+                List<Vector3> noisePath = Pathfinding.AStar.FindPath(collideable, transform.position, lastNoisePos);
+                if (noisePath.Count <= sight)
+                {
+                    isThereNoise = false;
+                    return Wander();
+                }
+                Debug.Log("[Monster] Following noise");
+                if (noisePath[1].x > transform.position.x)
+                {
+                    return MonsterMovement.Direction.RIGHT;
+                }
+                else if (noisePath[1].x < transform.position.x)
+                {
+                    return MonsterMovement.Direction.LEFT;
+                }
+                else if (noisePath[1].y > transform.position.y)
+                {
+                    return MonsterMovement.Direction.UP;
+                }
+                else if (noisePath[1].y < transform.position.y)
+                {
+                    return MonsterMovement.Direction.DOWN;
+                }
+                return MonsterMovement.Direction.NOWHERE;
+            }
+            else
+            {
+                return Wander();
+            }
         }
-        else if (path[1].x < transform.position.x)
+        else // If player is in sight
         {
+            Debug.Log("[Monster] Following Player");
+            if (path == null || path.Count <= 2)
+            {
+                return MonsterMovement.Direction.NOWHERE;
+            }
+            else if (path[1].x > transform.position.x)
+            {
+                return MonsterMovement.Direction.RIGHT;
+            }
+            else if (path[1].x < transform.position.x)
+            {
                 return MonsterMovement.Direction.LEFT;
-        }
-        else if (path[1].y > transform.position.y)
-        {
-            return MonsterMovement.Direction.UP;
-        }
-        else if (path[1].y < transform.position.y)
-        {
-            return MonsterMovement.Direction.DOWN;
+            }
+            else if (path[1].y > transform.position.y)
+            {
+                return MonsterMovement.Direction.UP;
+            }
+            else if (path[1].y < transform.position.y)
+            {
+                return MonsterMovement.Direction.DOWN;
+            }
         }
         return MonsterMovement.Direction.NOWHERE;
+    }
+
+    private MonsterMovement.Direction Wander()
+    {
+        Debug.Log("[Monster] Wandering");
+        return (MonsterMovement.Direction)Random.Range(0, 3);
     }
 
     public bool IsInRange()

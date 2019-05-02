@@ -10549,33 +10549,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1395700286}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00525e2f57f028c4f9c002e76fdf28de, type: 3}
+  m_Script: {fileID: 11500000, guid: 12a158790cf2813479b77f0e292f1e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imageColor:
-    r: 0.1882353
-    g: 0.1882353
-    b: 0.19607843
-    a: 1
-  textColor:
-    r: 0.43529412
-    g: 0.5803922
-    b: 0.5176471
-    a: 1
-  subImageColor:
-    r: 0.14509805
-    g: 0.09019608
-    b: 0.12941177
-    a: 1
-  subTextColor:
-    r: 0.68235296
-    g: 0.8627451
-    b: 0.72156864
-    a: 1
+  imageColor: {r: 0.1882353, g: 0.1882353, b: 0.19607843, a: 1}
+  textColor: {r: 0.43529412, g: 0.5803922, b: 0.5176471, a: 1}
+  subImageColor: {r: 0.14509805, g: 0.09019608, b: 0.12941177, a: 1}
+  subTextColor: {r: 0.68235296, g: 0.8627451, b: 0.72156864, a: 1}
 --- !u!114 &1395700289
 MonoBehaviour:
   m_ObjectHideFlags: 0

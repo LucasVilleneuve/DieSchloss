@@ -7,6 +7,7 @@ public class PickUp : MonoBehaviour
 {
     private PlayerStateMachine psm;
     private PlayerInventory pInv;
+    private MonsterBrain mBrain;
     private GameObject playerGo;
     private Canvas canvasInteraction;
     private UsableObject obj;
@@ -19,6 +20,7 @@ public class PickUp : MonoBehaviour
         playerGo = GameObject.FindGameObjectWithTag("Player");
         psm = playerGo.GetComponent<PlayerStateMachine>();
         pInv = playerGo.GetComponent<PlayerInventory>();
+        mBrain = GameObject.FindGameObjectWithTag("Monster").GetComponent<MonsterBrain>();
         canvasInteraction = GetComponentInChildren<Canvas>();
         obj = GetComponent<UsableObject>();
     }
@@ -65,6 +67,7 @@ public class PickUp : MonoBehaviour
         Debug.Log("Collecting " + obj.ToString());
 
         pInv.Add(obj);
+        mBrain.IMadeNoise(gameObject.transform.position, 500);
         EnableCanvas(false);
         Destroy(this.gameObject);
     }
