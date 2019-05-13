@@ -17,7 +17,7 @@ public class SoundHandler : MonoBehaviour
     
     // Variables to handle the periodic ambient sounds
     private System.Collections.IEnumerator randcallback = null;
-    public float[] timeRange = new float[] { 25, 50 };
+    public float[] timeRange = new float[] { 2, 3 };
 
     private AudioSource audioSource;
 
