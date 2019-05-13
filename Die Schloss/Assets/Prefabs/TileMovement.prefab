@@ -89,6 +89,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9034787432690628512}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5718f91645f9dae4f9dfeaa1b9938f2f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fb6866f759ab7a46b3407a3679ce9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  position: {x: 0, y: 0}
+  active: {fileID: 0}
+  unActive: {fileID: 0}
+  priorityTile: 1000
