@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerMovementV2))]
 public class PlayerStateMachine : MonoBehaviour
 {
     [SerializeField] private GameObject[] selectionCanvas;
@@ -15,7 +15,7 @@ public class PlayerStateMachine : MonoBehaviour
     }
 
     /* Components */
-    private PlayerMovement playerMov;
+    private PlayerMovementV2 playerMov;
     private GameStateMachine gsm;
 
     /* Public attributes */
@@ -27,7 +27,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         //Debug.Log("Player start");
         gsm = GameObject.FindGameObjectWithTag("GameStateMachine").GetComponent<GameStateMachine>();
-        playerMov = GetComponent<PlayerMovement>();
+        playerMov = GetComponent<PlayerMovementV2>();
     }
 
     private void Update()
