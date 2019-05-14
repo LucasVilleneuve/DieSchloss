@@ -98,20 +98,22 @@ public class PlayerMovementV2 : MonoBehaviour
         return hasCreated;
     }
 
-    private void CreateMapMovement()
+    private bool CreateMapMovement()
     {
         bool hasCreated = true;
-
-        mapTile.SetRangeMap(range, range2, range3);
-        xChoice = 0;
-        yChoice = 0;
+        bool somethingWasCreated = false;
         while (hasCreated)
         {
-            hasCreated = UpDownTile(1);
+            if ((hasCreated = UpDownTile(1)))
+                somethingWasCreated = true;
             if (UpDownTile(-1))
+            {
                 hasCreated = true;
+                somethingWasCreated = true;
+            }
         }
         mapTile.SmoothMap();
+        return somethingWasCreated;
     }
 
     private void SwitchFocusTile(bool xOrY, int minus)
@@ -168,6 +170,9 @@ public class PlayerMovementV2 : MonoBehaviour
         if (isMoving || !canMove) return;
         if (!moveDisplay)
         {
+            mapTile.SetRangeMap(range, range2, range3);
+            xChoice = 0;
+            yChoice = 0;
             CreateMapMovement();
             moveDisplay = true;
         }
