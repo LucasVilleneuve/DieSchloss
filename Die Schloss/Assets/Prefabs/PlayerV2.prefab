@@ -197,19 +197,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 7965964015811999359}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f702ac5159d2d5f4db397f1e76d88e7f, type: 3}
+  m_Script: {fileID: 11500000, guid: 221626f01db1f9d4790a957068a0241f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ground: {fileID: 0}
   collideable: {fileID: 0}
   interactiveObstaclesTilemap: {fileID: 0}
-  dirArrow: {fileID: 7965964016425459112}
-  arrowSprite: {fileID: 21300000, guid: ae6d83f5c54556345bd85f0ed647a225, type: 3}
+  dirArrow: {fileID: 7965964015865652481}
+  arrowSprite: {fileID: 21300000, guid: 51ae764cb422fed40b1ba20a2d1a2156, type: 3}
   crossSprite: {fileID: 21300000, guid: 4ff8377034be16a45b6c8327469c48e5, type: 3}
   moveTime: 0.1
-  range: 3
-  range2: 6
-  range3: 8
+  range: 6
+  range2: 9
+  range3: 11
   timeBetweenMove: 0.2
   moveDisplay: 0
   IsHiding: 0
@@ -431,17 +431,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 7965964016383787137}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b84b85bc930724f45b1909e299be7cc0, type: 3}
+  m_Script: {fileID: 11500000, guid: 692f87c27c6583f4dab13e449a791ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tileSprite:
-  - {fileID: 21300000, guid: 4a5a53f6f0180864da921ded377579fd, type: 3}
-  - {fileID: 21300002, guid: 4a5a53f6f0180864da921ded377579fd, type: 3}
-  - {fileID: 21300004, guid: 4a5a53f6f0180864da921ded377579fd, type: 3}
-  - {fileID: 21300006, guid: 4a5a53f6f0180864da921ded377579fd, type: 3}
-  - {fileID: 21300008, guid: 4a5a53f6f0180864da921ded377579fd, type: 3}
-  - {fileID: 21300010, guid: 4a5a53f6f0180864da921ded377579fd, type: 3}
-  tileMovementPrefab: {fileID: 9034787432690628512, guid: fa1a3e3051c1c00439e9f293f98ab13b,
+  - {fileID: 21300000, guid: a54facdfa31aaad4186e23b86d850243, type: 3}
+  - {fileID: 21300002, guid: a54facdfa31aaad4186e23b86d850243, type: 3}
+  - {fileID: 21300004, guid: a54facdfa31aaad4186e23b86d850243, type: 3}
+  - {fileID: 21300006, guid: a54facdfa31aaad4186e23b86d850243, type: 3}
+  - {fileID: 21300008, guid: a54facdfa31aaad4186e23b86d850243, type: 3}
+  - {fileID: 21300010, guid: a54facdfa31aaad4186e23b86d850243, type: 3}
+  tileMovementPrefab: {fileID: 9034787432690628512, guid: 04ad7d0264d238f4db92a016d145b7ce,
     type: 3}
 --- !u!1 &7965964016425459112
 GameObject:
