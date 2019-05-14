@@ -74,7 +74,7 @@ public class HighMsg : Message
     {
         if (sw.Elapsed.TotalSeconds > keepFor)
             return Action.Drop;
-        if (last < Level.High)
+        if (last <= Level.High)
             return Action.Display;
         return Action.Wait;
     }
