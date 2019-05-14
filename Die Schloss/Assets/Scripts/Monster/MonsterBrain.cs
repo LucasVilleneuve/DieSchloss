@@ -50,7 +50,7 @@ public class MonsterBrain : MonoBehaviour
             if (isThereNoise)
             {
                 List<Vector3> noisePath = Pathfinding.AStar.FindPath(collideable, transform.position, lastNoisePos);
-                if (noisePath.Count <= sight)
+                if (noisePath.Count <= 2)
                 {
                     isThereNoise = false;
                     return Wander();
