@@ -3818,7 +3818,7 @@ PrefabInstance:
     - target: {fileID: 2476921637204875334, guid: d76adea73175ae34bbf95f2925f6db01,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0000020934272
+      value: -0.0000024811247
       objectReference: {fileID: 0}
     - target: {fileID: 2476921637846860571, guid: d76adea73175ae34bbf95f2925f6db01,
         type: 3}
@@ -4808,10 +4808,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerV2
       objectReference: {fileID: 0}
+    - target: {fileID: 7965964016425459115, guid: fa31e110e3767ad40b5a6337135187e0,
+        type: 3}
+      propertyPath: timeLeftTurn
+      value: 
+      objectReference: {fileID: 1504570608}
+    - target: {fileID: 7965964016425459115, guid: fa31e110e3767ad40b5a6337135187e0,
+        type: 3}
+      propertyPath: selectionCanvas.Array.data[1]
+      value: 
+      objectReference: {fileID: 1841807162}
     - target: {fileID: 7965964015811999357, guid: fa31e110e3767ad40b5a6337135187e0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.5
+      value: -21.5
       objectReference: {fileID: 0}
     - target: {fileID: 7965964015811999357, guid: fa31e110e3767ad40b5a6337135187e0,
         type: 3}
@@ -4863,16 +4873,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7965964016425459115, guid: fa31e110e3767ad40b5a6337135187e0,
-        type: 3}
-      propertyPath: timeLeftTurn
-      value: 
-      objectReference: {fileID: 1504570608}
-    - target: {fileID: 7965964016425459115, guid: fa31e110e3767ad40b5a6337135187e0,
-        type: 3}
-      propertyPath: selectionCanvas.Array.data[1]
-      value: 
-      objectReference: {fileID: 1841807162}
     - target: {fileID: 7965964015811999618, guid: fa31e110e3767ad40b5a6337135187e0,
         type: 3}
       propertyPath: inventoryUi
