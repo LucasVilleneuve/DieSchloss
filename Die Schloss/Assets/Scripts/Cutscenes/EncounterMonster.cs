@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EncounterMonster : MonoBehaviour
 {
@@ -78,6 +79,9 @@ public class EncounterMonster : MonoBehaviour
         cutsceneMusicAnim.Play("FadeOut");
         PlayerMovement.PlayAnimation(playerAnim, PlayerMovement.Direction.LEFT);
         yield return StartCoroutine(SmoothMovement(player.transform, new Vector3(-28.5f, 8.5f, 0)));
+
+
+        SceneManager.LoadScene("EndScene");
     }
 
     private IEnumerator SmoothMovement(Transform tr, Vector3 end, float moveTime = 0.3f)
