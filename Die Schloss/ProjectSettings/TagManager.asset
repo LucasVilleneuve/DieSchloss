@@ -6,6 +6,8 @@ TagManager:
   tags:
   - GameStateMachine
   - Pickup
+  - Monster
+  - MusicManager
   layers:
   - Default
   - TransparentFX
