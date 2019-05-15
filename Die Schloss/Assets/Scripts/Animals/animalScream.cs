@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class animalScream : MonoBehaviour
 {
-    public bool isRunning = false;
     public Transform playerTransform;
 
     public float minDist = 4f;

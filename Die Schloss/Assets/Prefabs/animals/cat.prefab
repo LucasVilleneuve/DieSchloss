@@ -93,7 +93,7 @@ Animator:
   m_GameObject: {fileID: 1292507089320726107}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5f34ae715e27ea04c998a91ae5266b08, type: 2}
+  m_Controller: {fileID: 9100000, guid: be390d9d0d68f9842b5b790f71db9e9c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -112,7 +112,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5f9b442c892ae9749acd009776e62a01, type: 3}
+  m_audioClip: {fileID: 8300000, guid: df602e348c366b9489eaadee6cdeb70e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -228,10 +228,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1292507089320726107}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbde2d3243ebb8144b4b861426edf74b, type: 3}
+  m_Script: {fileID: 11500000, guid: fddaffb83c10a39488746c9bcf94bd3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRunning: 0
   playerTransform: {fileID: 0}
   minDist: 4
   wasFound: 0
