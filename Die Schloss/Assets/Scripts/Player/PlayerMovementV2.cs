@@ -75,6 +75,13 @@ public class PlayerMovementV2 : MonoBehaviour
         isInterract = Input.GetButton("Interact");
     }
     
+    public void CancelMap()
+    {
+        mapTile.DeleteTiles();
+        psm.ClearCurrentAction();
+        psm.EndTurn();
+    }
+
     private bool UpDownTile(int reverse)
     {
         bool hasCreated = mapTile.CreateTileMouvement(0, 0);
