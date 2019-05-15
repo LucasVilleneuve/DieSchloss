@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float moveTime = 0.3f;
 
-    private enum Direction
+    public enum Direction
     {
         UP,
         DOWN,
@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(Move(currentDirVec));
     }
 
-    private IEnumerator Move(Vector2 dir)
+    public IEnumerator Move(Vector2 dir)
     {
         Vector2 pos = transform.position;
         Vector2 targetPos = pos + dir;
@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
         if (CanMoveToTile(targetPos))
         {
             //Debug.Log("Before moving");
-            PlayAnimation(currentDir);
+            PlayAnimation(anim, currentDir);
             yield return StartCoroutine(SmoothMovement(targetPos));
             if (IsHiding)
             {
@@ -248,7 +248,7 @@ public class PlayerMovement : MonoBehaviour
         return (value >= floor && value < top);
     }
 
-    private void PlayAnimation(Direction dir)
+    public static void PlayAnimation(Animator anim, Direction dir)
     {
         switch (dir)
         {
@@ -270,5 +270,10 @@ public class PlayerMovement : MonoBehaviour
     private void StopAnimation()
     {
         anim.Play("Idle");
+    }
+
+    public void ChangeCurrentDir(Direction dir)
+    {
+        currentDir = dir;
     }
 }

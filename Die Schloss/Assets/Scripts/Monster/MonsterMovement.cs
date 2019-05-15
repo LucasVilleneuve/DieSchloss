@@ -51,7 +51,7 @@ public class MonsterMovement : MonoBehaviour
         StartCoroutine(Move(currentDirVec));
     }
 
-    private IEnumerator Move(Vector2 dir)
+    public IEnumerator Move(Vector2 dir)
     {
         Vector2 pos = transform.position;
         Vector2 targetPos = pos + dir;
@@ -59,7 +59,7 @@ public class MonsterMovement : MonoBehaviour
         if (CanMoveToTile(targetPos))
         {
             //Debug.Log("Before moving");
-            PlayAnimation(currentDir);
+            PlayAnimation(anim, currentDir);
             yield return StartCoroutine(SmoothMovement(targetPos));
             StopAnimation();
             //Debug.Log("After moving");
@@ -153,7 +153,7 @@ public class MonsterMovement : MonoBehaviour
         //Debug.Log("Finished moving");
     }
 
-    private void PlayAnimation(Direction dir)
+    public static void PlayAnimation(Animator anim, Direction dir)
     {
         switch (dir)
         {
@@ -175,5 +175,10 @@ public class MonsterMovement : MonoBehaviour
     private void StopAnimation()
     {
         anim.Play("Idle");
+    }
+
+    public void ChangeCurrentDir(Direction dir)
+    {
+        currentDir = dir;
     }
 }

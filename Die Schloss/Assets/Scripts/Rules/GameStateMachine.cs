@@ -12,7 +12,8 @@ public class GameStateMachine : MonoBehaviour
         GAMETURN,
         PLAYERTURN,
         ENEMYTURN,
-        END
+        END,
+        CUTSCENE
     }
 
     public Action currentAction;
@@ -66,6 +67,10 @@ public class GameStateMachine : MonoBehaviour
             case (Action.END):
                 currentAction = Action.START;
                 break;
+
+            case (Action.CUTSCENE):
+                break;
+
         }
     }
 

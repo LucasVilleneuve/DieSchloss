@@ -332,4 +332,9 @@ public class PlayerMovementV2 : MonoBehaviour
     {
         anim.Play("Idle");
     }
+
+    public void CancelMapTile()
+    {
+        mapTile.DeleteTiles();
+    }
 }
