@@ -24,7 +24,7 @@ public class SoundHandler : MonoBehaviour
     void Start()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
-        LoadSounds();
+        // LoadSounds();
         PlayDelayedSound();
     }
 

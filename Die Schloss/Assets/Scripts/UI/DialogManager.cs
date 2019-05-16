@@ -125,7 +125,7 @@ public class DialogManager : Singleton<DialogManager>
         {
             current = null;
             this.updateDisplay("");
-            SendDelayedMessage();
+            // SendDelayedMessage();
         }
         else
         {

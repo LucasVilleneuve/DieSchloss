@@ -19,7 +19,7 @@ public class DialogHandler : MonoBehaviour
 
     public void setMessage(string msg)
     {
-        Debug.Log("ouioui nouveau message [" + msg + "]");
+        Debug.Log("New dialog message [" + msg + "]");
         gameObject.SetActive(!(msg == null || msg == ""));
         message.text = msg;
     }
