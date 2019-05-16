@@ -18,7 +18,7 @@ public class MonsterStateMachine : MonoBehaviour
     private GameStateMachine gsm;
     private MonsterAttack ma;
     private MonsterBrain mb;
-    private int current_turn = 0;
+    public int current_turn = 0;
     private int last_turn = 0;
     private bool isDead = false;
     private int TurnDead = 0;
@@ -26,7 +26,7 @@ public class MonsterStateMachine : MonoBehaviour
     public MonsterState currentState = MonsterState.WAIT;
     public HandleTurn currentAction = null;
     public bool isCurrentlySelecting = false;
-
+   
     // Start is called before the first frame update
     void Start()
     {

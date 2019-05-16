@@ -30,6 +30,9 @@ public class MonsterMovement : MonoBehaviour
     private Direction currentDir = Direction.RIGHT;
     private Vector2 currentDirVec = new Vector2(1, 0);
     private Animator anim;
+    public bool haveToMove = false;
+    public int moveLeft = 0;
+    public int wrath = 1;
 
     // Start is called before the first frame update
     private void Awake()
@@ -70,7 +73,26 @@ public class MonsterMovement : MonoBehaviour
         }
 
         msm.ClearCurrentAction();
-        msm.CheckForAttack();
+        if (!haveToMove && moveLeft == 0)
+        {
+            haveToMove = true;
+            if (wrath % 5 == 0)
+                moveLeft = 8;
+            else
+                moveLeft = 4;
+            wrath += 1;
+        }
+        if (haveToMove && moveLeft != 0)
+        {
+            moveLeft--;
+            msm.current_turn += 1;
+            EnableMonsterMovement(true);
+        }
+        else
+        {
+            haveToMove = false;
+            msm.CheckForAttack();
+        }
     }
 
     private bool CanMoveToTile(Vector2 pos)

@@ -12,7 +12,7 @@ public class MonsterBrain : MonoBehaviour
     private Animator anim;
     private Vector3 lastNoisePos;
     private bool isThereNoise = false;
-    private int sight = 5;
+    private int sight = 25;
 
     // Start is called before the first frame update
     void Start()
