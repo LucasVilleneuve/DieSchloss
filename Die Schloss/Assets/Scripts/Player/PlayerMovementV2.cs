@@ -11,9 +11,6 @@ public class PlayerMovementV2 : MonoBehaviour
     [SerializeField] private Tilemap ground;
     [SerializeField] private Tilemap collideable;
     [SerializeField] private GameObject interactiveObstaclesTilemap;
-    [SerializeField] private GameObject dirArrow;
-    [SerializeField] private Sprite arrowSprite;
-    [SerializeField] private Sprite crossSprite;
 
     [SerializeField] private float moveTime = 0.3f;
 
@@ -62,7 +59,6 @@ public class PlayerMovementV2 : MonoBehaviour
         nextMove = Time.time;
         foreach (Transform child in interactiveObstaclesTilemap.transform)
         {
-            Debug.Log("Adding a child " + child.gameObject);
             interactiveObstacles.Add(child.gameObject.GetComponent<InteractiveObstacle>());
         }
     }
@@ -167,7 +163,6 @@ public class PlayerMovementV2 : MonoBehaviour
                 SwitchFocusTile(true, -1);
         }
 
-        dirArrow.transform.eulerAngles = new Vector3(0, 0, rotationAngle);
         currentDirVec = dir;
         nextMove = Time.time + timeBetweenMove;
     }
