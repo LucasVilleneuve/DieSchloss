@@ -141,10 +141,11 @@ public class MonsterStateMachine : MonoBehaviour
     {
         if (mb.IsInRange())
         {
-            ma.Atack();
+            StartCoroutine(ma.Atack());
             isDead = true;
             TurnDead = 4;
         }
-        EndTurn();
+        else
+            EndTurn();
     }
 }

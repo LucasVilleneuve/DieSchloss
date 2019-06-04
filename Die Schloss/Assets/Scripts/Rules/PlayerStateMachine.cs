@@ -1,10 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerMovementV2))]
 public class PlayerStateMachine : MonoBehaviour
 {
     [SerializeField] private GameObject[] selectionCanvas;
     [SerializeField] private TimeLeftTurn timeLeftTurn;
+    private int lifeleft;
+    public GameObject canvas;
 
     public enum PlayerState
     {
@@ -17,21 +22,27 @@ public class PlayerStateMachine : MonoBehaviour
     /* Components */
     private PlayerMovementV2 playerMov;
     private GameStateMachine gsm;
+    private Animator anim;
 
     /* Public attributes */
     public PlayerState currentState = PlayerState.WAIT;
     public HandleTurn currentAction = null;
     public bool isCurrentlySelecting = false;
+    public Text lifeText;
 
     private void Start()
     {
         //Debug.Log("Player start");
         gsm = GameObject.FindGameObjectWithTag("GameStateMachine").GetComponent<GameStateMachine>();
         playerMov = GetComponent<PlayerMovementV2>();
+        anim = GetComponentInChildren<Animator>();
+        lifeleft = 4;
+        lifeText.text = "X " + lifeleft;
     }
 
     private void Update()
     {
+        lifeText.text = "X " + lifeleft;
         switch (currentState)
         {
             case (PlayerState.WAIT):
@@ -133,5 +144,28 @@ public class PlayerStateMachine : MonoBehaviour
     public void NotifyTimeIsUp()
     {
         playerMov.ForceSelecting();
+    }
+
+    public IEnumerator TakeDammage(int dammage)
+    {
+        lifeleft -= dammage;
+        lifeText.text = "X " + lifeleft;
+        if (lifeleft <= 0)
+        {
+            lifeleft = 0;
+            lifeText.text = "X " + lifeleft;
+            yield return StartCoroutine(ActDead());
+            SceneManager.LoadScene("GameOver");
+        }
+    }
+
+    
+
+    private IEnumerator ActDead()
+    {
+        canvas.SetActive(false);
+        anim.Play("Dying");
+        yield return new WaitForSeconds(2);
+
     }
 }

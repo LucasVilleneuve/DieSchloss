@@ -10,6 +10,11 @@ public class GameSceneManager : MonoBehaviour
         SceneManager.LoadScene("Tutorial");
     }
 
+    public void BackToMenuClick()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
     public void ExitButtonClick()
     {
 #if UNITY_EDITOR
