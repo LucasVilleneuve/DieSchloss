@@ -69,7 +69,8 @@ public class SoundHandler : MonoBehaviour
         yield return new WaitForSeconds(sec);
         //Debug.Log("playing sound.");
         AudioClip clip = Clips[UnityEngine.Random.Range(0, Clips.Count)];
-        audioSource.PlayOneShot(clip);
+        if (clip)
+            audioSource.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
         //Debug.Log("Done.");
         PlayDelayedSound();

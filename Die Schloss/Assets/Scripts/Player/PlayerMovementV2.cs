@@ -11,9 +11,6 @@ public class PlayerMovementV2 : MonoBehaviour
     [SerializeField] private Tilemap ground;
     [SerializeField] private Tilemap collideable;
     [SerializeField] private GameObject interactiveObstaclesTilemap;
-    [SerializeField] private GameObject dirArrow;
-    [SerializeField] private Sprite arrowSprite;
-    [SerializeField] private Sprite crossSprite;
 
     [SerializeField] private float moveTime = 0.3f;
 
@@ -53,7 +50,7 @@ public class PlayerMovementV2 : MonoBehaviour
     private bool confirmButtonPressed = false;
     public bool IsHiding = false;
     public MapTile mapTile;
-    private bool isInterract;
+    private bool isInteracting;
 
     private void Awake()
     {
@@ -62,7 +59,6 @@ public class PlayerMovementV2 : MonoBehaviour
         nextMove = Time.time;
         foreach (Transform child in interactiveObstaclesTilemap.transform)
         {
-            Debug.Log("Adding a child " + child.gameObject);
             interactiveObstacles.Add(child.gameObject.GetComponent<InteractiveObstacle>());
         }
     }
@@ -72,7 +68,7 @@ public class PlayerMovementV2 : MonoBehaviour
         hInput = Input.GetAxisRaw("Horizontal");
         vInput = Input.GetAxisRaw("Vertical");
         confirmButtonPressed = Input.GetButton("Confirm");
-        isInterract = Input.GetButton("Interact");
+        isInteracting = Input.GetButton("Interact");
     }
     
     public void CancelMap()
@@ -88,14 +84,14 @@ public class PlayerMovementV2 : MonoBehaviour
         Vector2 pos = transform.position;
         for (int x = 0; x < range3; x++)
         {
-            int horinzon = range3 - x;
-            for (int y = 0; y < horinzon; y++)
+            int horizon = range3 - x;
+            for (int y = 0; y < horizon; y++)
             {
                 if (CanMoveToTile(pos + new Vector2(x * reverse,    y)))
                     if (mapTile.CreateTileMouvement(x * reverse, y))
                         hasCreated = true;
             }
-            for (int y = 0; y > -horinzon; y--)
+            for (int y = 0; y > -horizon; y--)
             {
                 if (CanMoveToTile(pos + new Vector2(x * reverse, y)))
                     if (mapTile.CreateTileMouvement(x * reverse, y))
@@ -135,39 +131,32 @@ public class PlayerMovementV2 : MonoBehaviour
 
     private void GetNewDirection(Vector2 dir)
     {
-        float rotationAngle = 0f;
-        
         if (dir.x != 0) dir.y = 0;
         if (dir == Vector2.up)
         {
             currentDir = Direction.UP;
-            rotationAngle = 90f;
             if (mapTile.isTileExist(new Vector2(xChoice, yChoice + 1)) != null)
                     SwitchFocusTile(false, 1);
         }
         else if (dir == Vector2.down)
         {
             currentDir = Direction.DOWN;
-            rotationAngle = -90f;
             if (mapTile.isTileExist(new Vector2(xChoice, yChoice - 1)) != null)
                 SwitchFocusTile(false, -1);
         }
         else if (dir == Vector2.right)
         {
             currentDir = Direction.RIGHT;
-            rotationAngle = 0f;
             if (mapTile.isTileExist(new Vector2(xChoice + 1, yChoice)) != null)
                 SwitchFocusTile(true, 1);
         }
         else if (dir == Vector2.left)
         {
             currentDir = Direction.LEFT;
-            rotationAngle = 180f;
             if (mapTile.isTileExist(new Vector2(xChoice - 1, yChoice)) != null)
                 SwitchFocusTile(true, -1);
         }
 
-        dirArrow.transform.eulerAngles = new Vector3(0, 0, rotationAngle);
         currentDirVec = dir;
         nextMove = Time.time + timeBetweenMove;
     }
@@ -184,7 +173,7 @@ public class PlayerMovementV2 : MonoBehaviour
             moveDisplay = true;
         }
 
-        if (isInterract)
+        if (isInteracting)
             CreateMapMovement();
         if (hInput != 0 || vInput != 0)
         {
@@ -203,31 +192,60 @@ public class PlayerMovementV2 : MonoBehaviour
         StartCoroutine(Move(mapTile.ListPosition(new Vector2(xChoice, yChoice))));
     }
 
-    private bool isReachingDestination(Vector2 dir)
-    {
-
-        return true;
-    }
-
     private IEnumerator Move(Stack<Vector2> directions)
     {
-        Vector2 pos = transform.position;
+        Vector2 oldPos = transform.position;
+        bool first = true;
 
         mapTile.DeleteTiles();
         while (directions.Count != 0)
         {
-            Vector2 dir = directions.Pop();
-            PlayAnimation(currentDir);
-            yield return StartCoroutine(SmoothMovement(dir));
+            Vector2 pos = directions.Pop();
+            Direction dir = DetermineNewDirection(oldPos, pos);
+            if (first || dir != currentDir)
+            {
+                currentDir = dir;
+                StopAnimation();
+                PlayAnimation(currentDir);
+                first = false;
+            }
+            yield return StartCoroutine(SmoothMovement(pos));
             if (IsHiding)
             {
                 IsHiding = false;
                 GetComponentsInChildren<SpriteRenderer>()[0].enabled = true;
             }
-            StopAnimation();
+            oldPos = pos;
         }
+        StopAnimation();
         psm.ClearCurrentAction();
         psm.EndTurn();
+    }
+
+    private Direction DetermineNewDirection(Vector2 oldPos, Vector2 newPos)
+    {
+        int xMovement = (int)(oldPos.x - newPos.x);
+        int yMovement = (int)(oldPos.y - newPos.y);
+
+        Debug.Log("Determing new Direction -- " + oldPos + " - " + newPos);
+
+        if (xMovement < 0)
+        {
+            return Direction.RIGHT;
+        }
+        else if (xMovement > 0)
+        {
+            return Direction.LEFT;
+        }
+        else if (yMovement < 0)
+        {
+            return Direction.UP;
+        }
+        else if (yMovement > 0)
+        {
+            return Direction.DOWN;
+        }
+        return currentDir;
     }
 
     private IEnumerator SmoothMovement(Vector3 end)
