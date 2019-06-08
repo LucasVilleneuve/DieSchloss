@@ -227,8 +227,6 @@ public class PlayerMovementV2 : MonoBehaviour
         int xMovement = (int)(oldPos.x - newPos.x);
         int yMovement = (int)(oldPos.y - newPos.y);
 
-        Debug.Log("Determing new Direction -- " + oldPos + " - " + newPos);
-
         if (xMovement < 0)
         {
             return Direction.RIGHT;
