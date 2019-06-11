@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Door : InteractiveObstacle
@@ -6,6 +7,7 @@ public class Door : InteractiveObstacle
     public bool needKey = true;
     public int idKeyItemAssociated = -1;
     public bool isLocked = true;
+    public string lockedMessage = "This door is locked. Try to find the key!";
 
     private PlayerInventory playerInv;
     private PlayerStateMachine psm;
@@ -18,6 +20,8 @@ public class Door : InteractiveObstacle
 
     private bool playerClose = false;
     private bool openInputPressed = false;
+    private float actionCooldown = 2.0f;
+    private float cooldown = 0.0f;
 
     private void Awake()
     {
@@ -36,6 +40,9 @@ public class Door : InteractiveObstacle
 
     protected void Update()
     {
+        cooldown -= Time.deltaTime;
+        cooldown = Math.Max(cooldown, 0.0f);
+
         openInputPressed = Input.GetButton("Interact");
 
         if (playerClose && psm.IsPlayerInSelectingState())
@@ -45,13 +52,38 @@ public class Door : InteractiveObstacle
                 EnableCanvas(true);
                 if (openInputPressed)
                 {
-                    Open();
+                    if (needKey)
+                    {
+                        UsableObject key = TryToGetKey();
+                        if (key is null)
+                        {
+                            ActionWhenLocked();
+                        }
+                        else
+                        {
+                            Open();                        
+                        }
+                    }
+                    else
+                    {
+                        Open();                        
+                    }
                 }
             }
         }
         else
         {
             EnableCanvas(false);
+        }
+    }
+
+    private void ActionWhenLocked()
+    {
+        if (cooldown <= 0.0f)
+        {
+            DialogManager.Instance.AddMessage(new MedMsg(lockedMessage));
+
+            cooldown = actionCooldown;
         }
     }
 

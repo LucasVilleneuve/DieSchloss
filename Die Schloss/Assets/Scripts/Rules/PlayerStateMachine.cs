@@ -9,7 +9,6 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] private GameObject[] selectionCanvas;
     [SerializeField] private TimeLeftTurn timeLeftTurn;
     private int lifeleft;
-    public GameObject canvas;
 
     public enum PlayerState
     {
@@ -163,7 +162,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private IEnumerator ActDead()
     {
-        canvas.SetActive(false);
+        EnableSelecting(false);
         anim.Play("Dying");
         yield return new WaitForSeconds(2);
 

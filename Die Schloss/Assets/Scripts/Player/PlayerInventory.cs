@@ -41,6 +41,10 @@ public class PlayerInventory : MonoBehaviour
     public UsableObject Get(int id)
     {
         UsableObject ret = inventory.Find(obj => obj.id == id);
+        foreach (UsableObject o in inventory)
+        {
+            Debug.Log(o.id);
+        }
         return ret;
     }
 

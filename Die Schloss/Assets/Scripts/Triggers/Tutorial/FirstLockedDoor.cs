@@ -21,27 +21,12 @@ public class FirstLockedDoor : MonoBehaviour
     {
         if (door.isPlayerClose() && psm.IsPlayerInSelectingState())
         {
-            if (door.isDoorLocked())
-            {
-                if (door.isOpenInputPressed())
-                {
-                    if (door.TryToGetKey() == null)
-                    {
-                        ActionWhenLocked();
-                    }
-                }
-            }
-            else if (!cutscenePlayed)
+            if (!door.isDoorLocked() && !cutscenePlayed)
             {
                 cutscenePlayed = true;
                 ActionWhenUnLocked();
             }  
         }
-    }
-
-    private void ActionWhenLocked()
-    {
-        DialogManager.Instance.AddMessage(new MedMsg("Try to find the key."));
     }
 
     private void ActionWhenUnLocked()
