@@ -81,7 +81,7 @@ public class EncounterMonster : MonoBehaviour
         yield return StartCoroutine(SmoothMovement(player.transform, new Vector3(-28.5f, 8.5f, 0)));
 
 
-        SceneManager.LoadScene("EndScene");
+        SceneManager.LoadScene("GameScene");
     }
 
     private IEnumerator SmoothMovement(Transform tr, Vector3 end, float moveTime = 0.3f)

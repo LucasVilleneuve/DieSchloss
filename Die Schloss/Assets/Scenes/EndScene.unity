@@ -14738,8 +14738,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "You arrived \nat the end\n of our alpha!\n\n\nWe will update\n our game
-    soon\n and add more content!"
+  m_Text: "You finally \nescaped this terrifying\ncastle!\n\n\nThanks for playing!"
 --- !u!222 &1707527720
 CanvasRenderer:
   m_ObjectHideFlags: 0
