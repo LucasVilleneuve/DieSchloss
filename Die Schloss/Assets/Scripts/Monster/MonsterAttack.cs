@@ -29,7 +29,7 @@ public class MonsterAttack : MonoBehaviour
     {
         Instantiate(Explosion, new Vector3(transform.position.x, transform.position.y , -1), Quaternion.identity);
         StartCoroutine("BeDead");
-        yield return StartCoroutine(psm.TakeDammage(24));
+        yield return StartCoroutine(psm.TakeDammage(1));
         msm.EndTurn();
 
     }
