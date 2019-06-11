@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311926, g: 0.38073996, b: 0.35872692, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13296,16 +13296,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3828203153455733362, guid: 3b902395a316e0c4682db23970663ba1,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b3614d6d07a1f974d9035b996cc0cccc, type: 2}
-    - target: {fileID: 4865031453683567523, guid: 3b902395a316e0c4682db23970663ba1,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2
-      objectReference: {fileID: 0}
     - target: {fileID: 4111559325295501567, guid: 3b902395a316e0c4682db23970663ba1,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -13350,6 +13340,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_DrawHalo
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3828203153455733362, guid: 3b902395a316e0c4682db23970663ba1,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b3614d6d07a1f974d9035b996cc0cccc, type: 2}
+    - target: {fileID: 4865031453683567523, guid: 3b902395a316e0c4682db23970663ba1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b902395a316e0c4682db23970663ba1, type: 3}
@@ -13436,11 +13436,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3828203153455733362, guid: 3b902395a316e0c4682db23970663ba1,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4111559325295501567, guid: 3b902395a316e0c4682db23970663ba1,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -13454,6 +13449,11 @@ PrefabInstance:
     - target: {fileID: 84872006240216929, guid: 3b902395a316e0c4682db23970663ba1,
         type: 3}
       propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3828203153455733362, guid: 3b902395a316e0c4682db23970663ba1,
+        type: 3}
+      propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -31389,7 +31389,7 @@ PrefabInstance:
     - target: {fileID: 2476921637204875334, guid: d76adea73175ae34bbf95f2925f6db01,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00023784548
+      value: 0.008623014
       objectReference: {fileID: 0}
     - target: {fileID: 2476921637846860571, guid: d76adea73175ae34bbf95f2925f6db01,
         type: 3}
@@ -33162,7 +33162,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 771bd6ac9227d114abb796f74768b3a4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8c2d9183325e37644be1b2f64abe8e6a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
