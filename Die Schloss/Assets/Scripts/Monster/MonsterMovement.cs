@@ -136,7 +136,7 @@ public class MonsterMovement : MonoBehaviour
             currentDirVec = Vector2.left;
         }
         else
-            currentDirVec = transform.position;
+            currentDirVec = new Vector2(0, 0);
         CheckIfCurrentDirIsValid();
     }
 
