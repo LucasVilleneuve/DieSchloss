@@ -77,9 +77,9 @@ public class MonsterMovement : MonoBehaviour
         {
             haveToMove = true;
             if (wrath % 5 == 0)
-                moveLeft = 8;
+                moveLeft = 6;
             else
-                moveLeft = 4;
+                moveLeft = 3;
             wrath += 1;
         }
         if (haveToMove && moveLeft != 0)

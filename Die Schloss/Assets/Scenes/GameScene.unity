@@ -2383,7 +2383,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.9166666, y: 1.3125, z: 0}
+  m_ChunkCullingBounds: {x: 0.5625, y: 0.859375, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -32494,12 +32494,12 @@ PrefabInstance:
     - target: {fileID: 7495835102837537892, guid: aa432f32a8de3be4cb5e49b1308d9f90,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 38.5
+      value: 45.5
       objectReference: {fileID: 0}
     - target: {fileID: 7495835102837537892, guid: aa432f32a8de3be4cb5e49b1308d9f90,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.5
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7495835102837537892, guid: aa432f32a8de3be4cb5e49b1308d9f90,
         type: 3}
@@ -32576,6 +32576,11 @@ PrefabInstance:
       propertyPath: prey
       value: 
       objectReference: {fileID: 761748382}
+    - target: {fileID: 7495835102837537902, guid: aa432f32a8de3be4cb5e49b1308d9f90,
+        type: 3}
+      propertyPath: sight
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3738218585162453056, guid: aa432f32a8de3be4cb5e49b1308d9f90,
         type: 3}
       propertyPath: psm
@@ -33793,7 +33798,7 @@ PrefabInstance:
     - target: {fileID: 2498456377922869156, guid: 18f17c637e4023642bc395cb8821c46b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00001012824
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2498456378354617593, guid: 18f17c637e4023642bc395cb8821c46b,
         type: 3}
